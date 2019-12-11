@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="ADS" Id="{42a8e07c-6d94-4347-bca1-6ed4d597561c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ADS
+VAR
+	fbAdsConnector : AdsConnector;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbAdsConnector();
+fbAdsConnector.Execute();]]></ST>
+    </Implementation>
+    <LineIds Name="ADS">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

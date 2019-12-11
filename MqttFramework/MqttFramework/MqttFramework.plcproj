@@ -23,6 +23,9 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\ADS.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\AdsConnector.TcPOU">
       <SubType>Code</SubType>
     </Compile>
