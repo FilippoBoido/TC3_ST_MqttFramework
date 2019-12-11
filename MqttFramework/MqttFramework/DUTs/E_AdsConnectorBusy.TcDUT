@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="E_AdsConnectorBusy" Id="{99828994-9fbb-4b42-a322-8bb7a3090611}">
+    <Declaration><![CDATA[
+TYPE E_AdsConnectorBusy :
+(
+	eNO_STEP := 0,
+	eCHECK_IF_CONNECTED,
+	eCONNECTED
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

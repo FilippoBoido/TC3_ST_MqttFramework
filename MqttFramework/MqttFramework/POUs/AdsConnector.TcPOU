@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="AdsConnector" Id="{d13dc3ab-3002-426d-a960-f2af687c2ce6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK AdsConnector EXTENDS StateMachine
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbStepWorkerBusy : FB_StepWorker;
+	cbConnected : Boolean; //Custom Boolean
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+Start();
+]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{557bd86e-e555-4a7c-a77e-516b13eb9cf0}">
+      <Declaration><![CDATA[METHOD PROTECTED Busy : BOOL
+VAR_INPUT
+END_VAR
+VAR_INST
+	eAdsConnectorBusy : E_AdsConnectorBusy;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[eAdsConnectorBusy := fbStepWorkerBusy.getStep;
+IF fbStepWorkerBusy.getStep = eNO_STEP 
+THEN
+	fbStepWorkerBusy.mNextStep(eCHECK_IF_CONNECTED);
+END_IF
+
+
+CASE fbStepWorkerBusy.getStep OF
+
+	eCHECK_IF_CONNECTED:
+		fbStepWorkerBusy.mAddCondition(cbConnected);
+		fbStepWorkerBusy.mNextStep(eCONNECTED);
+		
+	eCONNECTED:
+			;
+	
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{a1d17b9d-7981-4624-a63a-fd1f79acb21d}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{49a1d8eb-b338-4a16-b4bf-a4091e30e9a6}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{dfdb3cd6-9bf2-430d-bc98-33debb6aea1b}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{ec94fc33-ef3b-440d-9e4e-8102bbd092c1}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{97a24525-ce74-408c-8373-d4df1bf45d95}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{eae2389e-1940-4a75-9526-c10b28c969c3}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="AdsConnector">
+      <LineId Id="9" Count="2" />
+    </LineIds>
+    <LineIds Name="AdsConnector.Busy">
+      <LineId Id="22" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="AdsConnector.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="AdsConnector.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="AdsConnector.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="AdsConnector.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="AdsConnector.Ready">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="AdsConnector.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
