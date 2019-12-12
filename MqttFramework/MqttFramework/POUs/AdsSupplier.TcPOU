@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="AdsSupplier" Id="{0d50a734-f93b-4914-9a10-6f2a3be60896}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK AdsSupplier
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	stMqttLifePackage : ST_MqttLifePackage;
+	fbLocalSystemTime : FB_LocalSystemTime := ( bEnable := TRUE, dwCycle := 1 );
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbLocalSystemTime();
+stMqttLifePackage.uiStateMachine := MAIN.mainMachineCycle.eStateMachine;
+stMqttLifePackage.dtDate := SYSTEMTIME_TO_DT( fbLocalSystemTime.systemTime );]]></ST>
+    </Implementation>
+    <LineIds Name="AdsSupplier">
+      <LineId Id="12" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

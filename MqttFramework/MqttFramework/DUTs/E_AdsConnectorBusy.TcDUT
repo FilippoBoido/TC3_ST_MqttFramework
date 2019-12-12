@@ -6,7 +6,8 @@ TYPE E_AdsConnectorBusy :
 (
 	eNO_STEP := 0,
 	eCHECK_IF_CONNECTED,
-	eCONNECTED
+	eCONNECTED,
+	eDISCONNECTED
 );
 END_TYPE
 ]]></Declaration>

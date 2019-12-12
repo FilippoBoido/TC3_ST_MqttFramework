@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="MachineCycle" Id="{fdc3671d-6149-42f8-9b1d-397b8dace8e6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MachineCycle EXTENDS StateMachine
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+Start();]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{5d591906-f587-4523-9091-f95c379d4cb3}">
+      <Declaration><![CDATA[METHOD PROTECTED Busy : BOOL
+VAR_INPUT
+END_VAR
+VAR_INST
+	eAdsConnectorBusy : E_AdsConnectorBusy;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{7b29483d-0108-41c8-b9cf-998033a135d9}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{cd2e702c-923b-4852-ab0b-3a97f38d2fa9}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{ccd6d14a-344c-4a25-bfc3-ce5e939c71cc}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{32a12e8b-2e91-409a-834d-b1ce78bae0e2}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{23737be8-0a59-4a9a-8e15-4787ed54319c}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+Check conditions to fire Execute() here and put the StateMachine in Busy mode
+*)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{7b8620e8-4807-4be1-bccc-712aaca2aa48}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="MachineCycle">
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="MachineCycle.Busy">
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="MachineCycle.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MachineCycle.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MachineCycle.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MachineCycle.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MachineCycle.Ready">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="MachineCycle.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

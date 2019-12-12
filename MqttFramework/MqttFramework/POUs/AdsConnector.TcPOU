@@ -9,6 +9,7 @@ END_VAR
 VAR
 	fbStepWorkerBusy : FB_StepWorker;
 	cbConnected : Boolean; //Custom Boolean
+	fbAdsSupplier : AdsSupplier;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -34,11 +35,22 @@ END_IF
 CASE fbStepWorkerBusy.getStep OF
 
 	eCHECK_IF_CONNECTED:
+	
 		fbStepWorkerBusy.mAddCondition(cbConnected);
 		fbStepWorkerBusy.mNextStep(eCONNECTED);
 		
 	eCONNECTED:
-			;
+	
+		fbAdsSupplier();
+		IF NOT cbConnected.getValue
+		THEN
+			fbStepWorkerBusy.mNextStep(eDISCONNECTED);
+		END_IF
+	
+	eDISCONNECTED:
+	
+		Done();
+		fbStepWorkerBusy.mNextStep(eNO_STEP);
 	
 END_CASE]]></ST>
       </Implementation>
@@ -110,11 +122,17 @@ END_VAR
       <LineId Id="5" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="7" Count="0" />
+      <LineId Id="37" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="20" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="38" Count="0" />
       <LineId Id="18" Count="0" />
+      <LineId Id="28" Count="4" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="33" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="6" Count="0" />
     </LineIds>

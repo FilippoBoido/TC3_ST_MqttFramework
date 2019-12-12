@@ -1,16 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="MAIN" Id="{a86c6d0f-1010-44d2-ba7b-37cc6bac563a}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM MAIN
+    <Declaration><![CDATA[PROGRAM MAIN 
 VAR
-	fbAdsConnector : AdsConnector;
+	mainMachineCycle : MachineCycle;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[mainMachineCycle();
+]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="8" Count="0" />
+      <LineId Id="13" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

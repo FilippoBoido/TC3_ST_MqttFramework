@@ -10,9 +10,12 @@
 		</System>
 		<Plc>
 			<Project GUID="{D13201A7-77B4-4686-B8F3-E4E5D0BC46F7}" Name="MqttFramework" PrjFilePath="MqttFramework\MqttFramework.plcproj" TmcFilePath="MqttFramework\MqttFramework.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="MqttFramework\MqttFramework.tmc">
 					<Name>MqttFramework Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x08502001"/>
+					</TaskPouOids>
 				</Instance>
 			</Project>
 		</Plc>

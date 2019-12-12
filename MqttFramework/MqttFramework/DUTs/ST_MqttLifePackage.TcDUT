@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="ST_MqttLifePackage" Id="{ba430208-5cf3-4ba4-9dc5-3f09509be50d}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'}
+TYPE ST_MqttLifePackage :
+STRUCT
+	//State of the current machine
+	uiStateMachine : UINT;
+	dtDate : DATE_AND_TIME;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
