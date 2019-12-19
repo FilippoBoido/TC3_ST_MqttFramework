@@ -3,22 +3,35 @@
   <POU Name="AdsSupplier" Id="{0d50a734-f93b-4914-9a10-6f2a3be60896}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK AdsSupplier
 VAR_INPUT
+	(* Here all mqtt packages that need to be exchanged.*)
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	stMqttLifePackage : ST_MqttLifePackage;
+	
 	fbLocalSystemTime : FB_LocalSystemTime := ( bEnable := TRUE, dwCycle := 1 );
+	
+	stMqttLifePackage : ST_MqttLifePackage;
+	stEmptyLifePackage : ST_MqttLifePackage;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[fbLocalSystemTime();
-stMqttLifePackage.uiStateMachine := MAIN.mainMachineCycle.eStateMachine;
-stMqttLifePackage.dtDate := SYSTEMTIME_TO_DT( fbLocalSystemTime.systemTime );]]></ST>
+stMqttLifePackage := stEmptyLifePackage;
+IF fbLocalSystemTime.bValid 
+THEN
+	stMqttLifePackage.uiStateMachine := MAIN.mainMachineCycle.eStateMachine;
+	stMqttLifePackage.dtDate := SYSTEMTIME_TO_DT( fbLocalSystemTime.systemTime );
+END_IF
+]]></ST>
     </Implementation>
     <LineIds Name="AdsSupplier">
       <LineId Id="12" Count="0" />
-      <LineId Id="9" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="30" Count="0" />
       <LineId Id="13" Count="0" />
     </LineIds>
   </POU>
