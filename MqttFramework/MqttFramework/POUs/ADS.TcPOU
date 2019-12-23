@@ -4,6 +4,7 @@
     <Declaration><![CDATA[PROGRAM ADS
 VAR
 	fbAdsConnector : AdsConnector;
+	fbMqttClient : MqttClient;
 END_VAR
 
 ]]></Declaration>

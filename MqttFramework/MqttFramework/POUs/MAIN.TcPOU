@@ -4,15 +4,106 @@
     <Declaration><![CDATA[PROGRAM MAIN 
 VAR
 	mainMachineCycle : MachineCycle;
+	fbLifePackageTimer : TON := (PT := T#1S);
+	fbStepWorker : FB_StepWorker;
+	stMqttSubPayload : ST_MqttPayload;
+	stMqttPubPayload : ST_MqttPayload;
+	messageIndex : UINT;
+	fbLocalSystemTime : FB_LocalSystemTime := ( bEnable := TRUE, dwCycle := 1 );
+	udiTime : UDINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[mainMachineCycle();
+fbLocalSystemTime();
+(*Test your mqtt implementation here*)
+fbLifePackageTimer();
+
+CASE fbStepWorker.getStep OF
+
+	ePREPARE_SUBSCRIBTION:
+	
+		IF ADS.fbAdsConnector.isConnected
+		THEN
+			IF ADS.fbMqttClient.Subscribe('TEST')
+			THEN
+				fbStepWorker.mNextStep(ePUBLISH);
+			END_IF
+		END_IF
+		
+	ePUBLISH:
+	
+		udiTime := DT_TO_UDINT(SYSTEMTIME_TO_DT(fbLocalSystemTIme.systemTime));
+		stMqttPubPayload.id := 1; // ID = 1 stays for life-package
+		MEMCPY(ADR(stMqttPubPayload.data),ADR(udiTime),4);
+		
+		IF ADS.fbMqttClient.Publish('TEST',stMqttPubPayload)
+		THEN
+			fbStepWorker.mNextStep(eCHECK_SUBSCRIBTION);
+		END_IF	
+			
+	eCHECK_SUBSCRIBTION:
+		
+		messageIndex := ADS.fbMqttClient.isNewMessage('TEST');
+		IF messageIndex > 0
+		THEN
+			stMqttSubPayload := Ads.fbMqttClient.getNewMessage(messageIndex);
+			fbStepWorker.mNextStep(eEVAL_PAYLOAD);
+		END_IF
+			
+	eEVAL_PAYLOAD:
+	
+		fbLifePackageTimer.IN := TRUE;
+		IF fbLifePackageTimer.Q
+			AND fbLocalSystemTime.bValid
+		THEN
+			fbLifePackageTimer.IN := FALSE;
+			fbStepWorker.mNextStep(ePUBLISH);
+		END_IF
+		
+	
+END_CASE
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="8" Count="0" />
+      <LineId Id="18" Count="0" />
       <LineId Id="13" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="26" Count="4" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="74" Count="2" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="60" Count="1" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="63" Count="1" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="65" Count="3" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="19" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

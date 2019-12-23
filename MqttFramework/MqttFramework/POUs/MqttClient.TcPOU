@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="MqttClient" Id="{a9904573-1d06-4478-8539-d64d4604b034}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MqttClient EXTENDS StateMachine
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	
+END_VAR
+
+VAR
+	bPublishing : BOOL;
+	bPublished : BOOL;
+	bSubscribing : BOOL;
+	bSubscribed : BOOL;
+	
+	uiSubscribtionCounter : UINT := 1;
+	uiPublicationCounter : UINT := 1;
+	
+	aAdsSubscribtionStorage : ARRAY[1..cMaxSubscribtions] OF ST_MqttAdsShell;
+	aAdsPublicationStorage : ARRAY[1..cMaxSubscribtions] OF ST_MqttAdsShell;
+	
+	i : UINT;
+	
+END_VAR
+
+VAR CONSTANT
+	cMaxSubscribtions : UINT := 10;
+	cMaxPublications : UINT := 10;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="StateMachine" Id="{e219cd41-9610-407f-b4ed-9df13e5fae30}" />
+    <Method Name="Busy" Id="{fc714c6c-11a3-4bb1-b35e-e4c26c799a3c}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD PROTECTED Busy : BOOL
+VAR_INPUT
+END_VAR
+VAR_INST
+	eAdsConnectorBusy : E_AdsConnectorBusy;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{36035d46-88bf-453a-b0c1-0bc62b8a89e5}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="getNewMessage" Id="{2b8aaccd-97e7-4e22-9aff-94f5dd801ca2}">
+      <Declaration><![CDATA[METHOD getNewMessage : ST_MqttPayload
+VAR_INPUT
+	index : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF index > 0
+	AND index <= cMaxSubscribtions 
+THEN
+	getNewMessage := aAdsSubscribtionStorage[index].stMqttPayload;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{f2b37aac-75e1-45d1-adb2-6115990781c2}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{6d9582f2-fc30-494a-a725-136ab2304568}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="isNewMessage" Id="{12c826f3-1d82-472b-9ba8-baf5d56c084c}">
+      <Declaration><![CDATA[METHOD isNewMessage : UINT
+VAR_INPUT
+	sTopic : STRING(8);
+END_VAR
+VAR
+	i : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO cMaxSubscribtions
+DO
+	IF aAdsSubscribtionStorage[i].sTopic = sTopic 
+		AND_THEN aAdsSubscribtionStorage[i].bNewMessage
+	THEN
+		isNewMessage := i;
+		RETURN;
+	END_IF
+	
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{ac43893e-86e6-4b98-bf1a-bbd127d69842}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Publish" Id="{af1bedd9-5057-4118-abdc-a50473914887}">
+      <Declaration><![CDATA[METHOD Publish : BOOL //Return true if published
+VAR_INPUT
+	sTopic : STRING(8);
+	stMqttPayload : ST_MqttPayload;
+END_VAR
+
+	]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  uiPublicationCounter > cMaxPublications
+	OR
+ 	(
+		bPublishing = TRUE 
+		AND bPublished = FALSE
+ 	) 
+THEN
+	RETURN;
+ELSIF bPublishing = TRUE
+	AND bPublished = TRUE
+THEN
+	bPublishing := FALSE;
+	bPublished := FALSE;
+	Publish := TRUE;
+	RETURN;
+END_IF
+	
+aAdsPublicationStorage[uiPublicationCounter].stMqttPayload := stMqttPayload;
+aAdsPublicationStorage[uiPublicationCounter].sTopic := sTopic;
+uiPublicationCounter := uiPublicationCounter + 1;
+
+bPublishing := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{276525ab-8c0c-4f7e-9451-178516549953}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+Check conditions to fire Execute() here and put the StateMachine in Busy mode
+*)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Subscribe" Id="{76f556c2-933e-41ef-8e37-b2f14dd034d4}">
+      <Declaration><![CDATA[METHOD Subscribe : BOOL  //Return true if subscribed
+VAR_INPUT
+	sTopic : STRING(8);
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF 	uiSubscribtionCounter > cMaxSubscribtions
+	OR
+ 	(
+		bSubscribing = TRUE 
+		AND bSubscribed = FALSE
+ 	) 
+THEN
+	RETURN;
+ELSIF bSubscribing = TRUE
+	AND bSubscribed = TRUE
+THEN
+	bSubscribing := FALSE;
+	bSubscribed := FALSE;
+	Subscribe := TRUE;
+	RETURN;
+END_IF
+
+aAdsSubscribtionStorage[uiSubscribtionCounter].bPlcInit := TRUE;
+aAdsSubscribtionStorage[uiSubscribtionCounter].sTopic := sTopic;
+uiSubscribtionCounter := uiSubscribtionCounter + 1;
+
+bSubscribing := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{c489313b-bd3b-4ab8-96a1-8021a3677c8a}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="MqttClient">
+      <LineId Id="42" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.Busy">
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.getNewMessage">
+      <LineId Id="20" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.isNewMessage">
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="6" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="16" Count="1" />
+    </LineIds>
+    <LineIds Name="MqttClient.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.Publish">
+      <LineId Id="9" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="25" Count="3" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="14" Count="3" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.Ready">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.Subscribe">
+      <LineId Id="12" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="14" Count="9" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="24" Count="2" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

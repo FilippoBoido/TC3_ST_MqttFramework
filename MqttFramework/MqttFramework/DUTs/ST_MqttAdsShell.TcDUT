@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="ST_MqttAdsShell" Id="{0eeb0936-e2e0-4840-992d-149df7d83e34}">
+    <Declaration><![CDATA[TYPE ST_MqttAdsShell :
+STRUCT
+	bPlcInit : BOOL;
+	bAdsInit : BOOL;
+	bNewMessage : BOOL;
+	sTopic : STRING(8);
+	stMqttPayload : ST_MqttPayload;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

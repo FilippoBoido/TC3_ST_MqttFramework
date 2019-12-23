@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="E_MainStep" Id="{db132ccf-282a-42c2-9dab-7b358aec39c3}">
+    <Declaration><![CDATA[
+TYPE E_MainStep :
+(
+	ePREPARE_SUBSCRIBTION := 0,
+	ePUBLISH,
+	eCHECK_SUBSCRIBTION,
+	eEVAL_PAYLOAD,
+	ePREPARE_PACKAGE_TIMER 
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

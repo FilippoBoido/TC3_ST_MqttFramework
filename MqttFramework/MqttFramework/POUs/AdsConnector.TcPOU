@@ -10,6 +10,7 @@ VAR
 	fbStepWorkerBusy : FB_StepWorker;
 	cbConnected : Boolean; //Custom Boolean
 	fbAdsSupplier : AdsSupplier;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -82,6 +83,17 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
+    <Property Name="isConnected" Id="{54f9340d-cbf5-4433-8664-c155d7925800}">
+      <Declaration><![CDATA[PROPERTY isConnected : BOOL]]></Declaration>
+      <Get Name="Get" Id="{f5d6e490-a741-47db-aa41-341eea6f4319}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[isConnected := cbConnected.getValue;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="Prepare" Id="{ec94fc33-ef3b-440d-9e4e-8102bbd092c1}">
       <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
 VAR_INPUT
@@ -144,6 +156,9 @@ END_VAR
     </LineIds>
     <LineIds Name="AdsConnector.Init">
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="AdsConnector.isConnected.Get">
+      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="AdsConnector.Prepare">
       <LineId Id="5" Count="0" />
