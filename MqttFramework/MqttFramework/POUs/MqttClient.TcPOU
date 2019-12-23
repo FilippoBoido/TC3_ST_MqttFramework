@@ -14,18 +14,18 @@ VAR
 	bSubscribing : BOOL;
 	bSubscribed : BOOL;
 	
-	uiSubscribtionCounter : UINT := 1;
+	uiSubscriptionCounter : UINT := 1;
 	uiPublicationCounter : UINT := 1;
 	
-	aAdsSubscribtionStorage : ARRAY[1..cMaxSubscribtions] OF ST_MqttAdsShell;
-	aAdsPublicationStorage : ARRAY[1..cMaxSubscribtions] OF ST_MqttAdsShell;
+	aAdsSubscriptionStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
+	aAdsPublicationStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
 	
 	i : UINT;
 	
 END_VAR
 
 VAR CONSTANT
-	cMaxSubscribtions : UINT := 10;
+	cMaxSubscriptions : UINT := 10;
 	cMaxPublications : UINT := 10;
 END_VAR
 ]]></Declaration>
@@ -61,9 +61,9 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF index > 0
-	AND index <= cMaxSubscribtions 
+	AND index <= cMaxSubscriptions 
 THEN
-	getNewMessage := aAdsSubscribtionStorage[index].stMqttPayload;
+	getNewMessage := aAdsSubscriptionStorage[index].stMqttPayload;
 END_IF
 
 ]]></ST>
@@ -96,10 +96,10 @@ VAR
 	i : UINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO cMaxSubscribtions
+        <ST><![CDATA[FOR i := 1 TO cMaxSubscriptions
 DO
-	IF aAdsSubscribtionStorage[i].sTopic = sTopic 
-		AND_THEN aAdsSubscribtionStorage[i].bNewMessage
+	IF aAdsSubscriptionStorage[i].sTopic = sTopic 
+		AND_THEN aAdsSubscriptionStorage[i].bNewMessage
 	THEN
 		isNewMessage := i;
 		RETURN;
@@ -170,7 +170,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF 	uiSubscribtionCounter > cMaxSubscribtions
+        <ST><![CDATA[IF 	uiSubscriptionCounter > cMaxSubscriptions
 	OR
  	(
 		bSubscribing = TRUE 
@@ -187,9 +187,9 @@ THEN
 	RETURN;
 END_IF
 
-aAdsSubscribtionStorage[uiSubscribtionCounter].bPlcInit := TRUE;
-aAdsSubscribtionStorage[uiSubscribtionCounter].sTopic := sTopic;
-uiSubscribtionCounter := uiSubscribtionCounter + 1;
+aAdsSubscriptionStorage[uiSubscriptionCounter].bPlcInit := TRUE;
+aAdsSubscriptionStorage[uiSubscriptionCounter].sTopic := sTopic;
+uiSubscriptionCounter := uiSubscriptionCounter + 1;
 
 bSubscribing := TRUE;]]></ST>
       </Implementation>

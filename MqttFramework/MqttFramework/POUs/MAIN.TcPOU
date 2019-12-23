@@ -39,10 +39,10 @@ CASE fbStepWorker.getStep OF
 		
 		IF ADS.fbMqttClient.Publish('TEST',stMqttPubPayload)
 		THEN
-			fbStepWorker.mNextStep(eCHECK_SUBSCRIBTION);
+			fbStepWorker.mNextStep(eCHECK_SUBSCRIPTION);
 		END_IF	
 			
-	eCHECK_SUBSCRIBTION:
+	eCHECK_SUBSCRIPTION:
 		
 		messageIndex := ADS.fbMqttClient.isNewMessage('TEST');
 		IF messageIndex > 0
