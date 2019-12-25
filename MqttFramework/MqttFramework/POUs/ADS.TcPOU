@@ -5,16 +5,29 @@
 VAR
 	fbAdsConnector : AdsConnector;
 	fbMqttClient : MqttClient;
+	sizeOfMqttPayload : UINT;
+	sizeOfAdsShell : UINT;
+	sizeOfTopic : UINT;
 END_VAR
 
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[fbAdsConnector();
-fbAdsConnector.Execute();]]></ST>
+fbAdsConnector.Execute();
+fbMqttClient();
+
+sizeOfMqttPayload := SIZEOF(ST_MQTTPAYLOAD);
+sizeOfAdsShell := SIZEOF(ST_MQTTADSSHELL);
+sizeOfTopic := SIZEOF(ST_MQTTADSSHELL.sTopic);]]></ST>
     </Implementation>
     <LineIds Name="ADS">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

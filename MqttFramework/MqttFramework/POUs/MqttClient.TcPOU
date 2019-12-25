@@ -17,8 +17,13 @@ VAR
 	uiSubscriptionCounter : UINT := 1;
 	uiPublicationCounter : UINT := 1;
 	
+	uiSizeOfSubscriptions : UINT;
+	uiSizeOfPublications : UINT;
+	
 	aAdsSubscriptionStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
 	aAdsPublicationStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
+	
+	sizeOfAdsShell : UINT;
 	
 	i : UINT;
 	
@@ -30,7 +35,8 @@ VAR CONSTANT
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[SUPER^();
+Start();]]></ST>
     </Implementation>
     <Folder Name="StateMachine" Id="{e219cd41-9610-407f-b4ed-9df13e5fae30}" />
     <Method Name="Busy" Id="{fc714c6c-11a3-4bb1-b35e-e4c26c799a3c}" FolderPath="StateMachine\">
@@ -84,7 +90,10 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[uiSizeOfSubscriptions := SIZEOF(aAdsSubscriptionStorage);
+uiSizeOfPublications := SIZEOF(aAdsPublicationStorage);
+
+sizeOfAdsShell := SIZEOF(ST_MQTTADSSHELL);]]></ST>
       </Implementation>
     </Method>
     <Method Name="isNewMessage" Id="{12c826f3-1d82-472b-9ba8-baf5d56c084c}">
@@ -187,7 +196,6 @@ THEN
 	RETURN;
 END_IF
 
-aAdsSubscriptionStorage[uiSubscriptionCounter].bPlcInit := TRUE;
 aAdsSubscriptionStorage[uiSubscriptionCounter].sTopic := sTopic;
 uiSubscriptionCounter := uiSubscriptionCounter + 1;
 
@@ -204,6 +212,7 @@ END_VAR
       </Implementation>
     </Method>
     <LineIds Name="MqttClient">
+      <LineId Id="73" Count="0" />
       <LineId Id="42" Count="0" />
     </LineIds>
     <LineIds Name="MqttClient.Busy">
@@ -226,6 +235,9 @@ END_VAR
     </LineIds>
     <LineIds Name="MqttClient.Init">
       <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
     </LineIds>
     <LineIds Name="MqttClient.isNewMessage">
       <LineId Id="5" Count="0" />
@@ -262,9 +274,7 @@ END_VAR
       <LineId Id="37" Count="0" />
       <LineId Id="14" Count="9" />
       <LineId Id="28" Count="0" />
-      <LineId Id="24" Count="2" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="27" Count="0" />
+      <LineId Id="24" Count="3" />
       <LineId Id="38" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="32" Count="0" />
