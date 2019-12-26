@@ -22,7 +22,7 @@ VAR
 	
 	aAdsSubscriptionStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
 	aAdsPublicationStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
-	
+	aAdsOldPublications : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
 	sizeOfAdsShell : UINT;
 	
 	i : UINT;
@@ -69,6 +69,7 @@ END_VAR
         <ST><![CDATA[IF index > 0
 	AND index <= cMaxSubscriptions 
 THEN
+	aAdsSubscriptionStorage[index].bNewMessage := FALSE;
 	getNewMessage := aAdsSubscriptionStorage[index].stMqttPayload;
 END_IF
 
@@ -134,25 +135,30 @@ VAR_INPUT
 	stMqttPayload : ST_MqttPayload;
 END_VAR
 
-	]]></Declaration>
+VAR
+	aEmptyPublicationStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF  uiPublicationCounter > cMaxPublications
-	OR
- 	(
-		bPublishing = TRUE 
-		AND bPublished = FALSE
- 	) 
+        <ST><![CDATA[IF  bPublishing
+	AND NOT bPublished
 THEN
 	RETURN;
-ELSIF bPublishing = TRUE
-	AND bPublished = TRUE
+ELSIF bPublishing 
+	AND bPublished
 THEN
 	bPublishing := FALSE;
 	bPublished := FALSE;
 	Publish := TRUE;
 	RETURN;
 END_IF
-	
+
+IF uiPublicationCounter > cMaxPublications
+THEN
+	aAdsOldPublications := aAdsPublicationStorage;
+	aAdsPublicationStorage := aEmptyPublicationStorage;	
+	uiPublicationCounter := 1;
+END_IF
+
 aAdsPublicationStorage[uiPublicationCounter].stMqttPayload := stMqttPayload;
 aAdsPublicationStorage[uiPublicationCounter].sTopic := sTopic;
 uiPublicationCounter := uiPublicationCounter + 1;
@@ -225,6 +231,7 @@ END_VAR
       <LineId Id="20" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="21" Count="0" />
+      <LineId Id="30" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="19" Count="0" />
@@ -249,16 +256,19 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="MqttClient.Publish">
-      <LineId Id="9" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="25" Count="3" />
+      <LineId Id="26" Count="1" />
       <LineId Id="11" Count="0" />
       <LineId Id="14" Count="3" />
       <LineId Id="19" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="20" Count="1" />
       <LineId Id="18" Count="0" />
+      <LineId Id="48" Count="0" />
       <LineId Id="12" Count="0" />
+      <LineId Id="49" Count="2" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="47" Count="0" />
       <LineId Id="37" Count="1" />
       <LineId Id="36" Count="0" />
       <LineId Id="39" Count="0" />

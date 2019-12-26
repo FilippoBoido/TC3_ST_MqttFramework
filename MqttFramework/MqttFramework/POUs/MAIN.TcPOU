@@ -4,13 +4,16 @@
     <Declaration><![CDATA[PROGRAM MAIN 
 VAR
 	mainMachineCycle : MachineCycle;
-	fbLifePackageTimer : TON := (PT := T#1S);
+	fbLifePackageTimer : TON := (PT := T#10S);
 	fbStepWorker : FB_StepWorker;
 	stMqttSubPayload : ST_MqttPayload;
 	stMqttPubPayload : ST_MqttPayload;
 	messageIndex : UINT;
 	fbLocalSystemTime : FB_LocalSystemTime := ( bEnable := TRUE, dwCycle := 1 );
 	udiTime : UDINT;
+	udiReceivedTime : UDINT;
+	//Zeitstempel der letzten Mqtt-Nachricht. Der Zeitstempel bezieht sich auf die Zeit kurz vor der Veröffentlichung.
+	dtReceivedTime : DT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -21,21 +24,25 @@ fbLifePackageTimer();
 
 CASE fbStepWorker.getStep OF
 
-	ePREPARE_SUBSCRIBTION:
+	ePREPARE_SUBSCRIPTION:
 	
 		IF ADS.fbAdsConnector.isConnected
 		THEN
 			IF ADS.fbMqttClient.Subscribe('TEST')
 			THEN
-				fbStepWorker.mNextStep(ePUBLISH);
+				
+				fbStepWorker.mNextStep(ePREP_PUBLISH);
 			END_IF
 		END_IF
 		
-	ePUBLISH:
+	ePREP_PUBLISH:	
 	
 		udiTime := DT_TO_UDINT(SYSTEMTIME_TO_DT(fbLocalSystemTIme.systemTime));
-		stMqttPubPayload.id := 1; // ID = 1 stays for life-package
+		stMqttPubPayload.id := stMqttPubPayload.id + 1;
 		MEMCPY(ADR(stMqttPubPayload.data),ADR(udiTime),4);
+		fbStepWorker.mNextStep(ePUBLISH);
+		
+	ePUBLISH:
 		
 		IF ADS.fbMqttClient.Publish('TEST',stMqttPubPayload)
 		THEN
@@ -53,12 +60,15 @@ CASE fbStepWorker.getStep OF
 			
 	eEVAL_PAYLOAD:
 	
+		//last received time via mqtt
+		MEMCPY(ADR(udiReceivedTime),ADR(stMqttSubPayload.data),4);
+		dtReceivedTime := UDINT_TO_DT(udiReceivedTime);
 		fbLifePackageTimer.IN := TRUE;
 		IF fbLifePackageTimer.Q
 			AND fbLocalSystemTime.bValid
 		THEN
 			fbLifePackageTimer.IN := FALSE;
-			fbStepWorker.mNextStep(ePUBLISH);
+			fbStepWorker.mNextStep(ePREP_PUBLISH);
 		END_IF
 		
 	
@@ -74,16 +84,19 @@ END_CASE
       <LineId Id="26" Count="4" />
       <LineId Id="46" Count="1" />
       <LineId Id="49" Count="0" />
+      <LineId Id="96" Count="0" />
       <LineId Id="51" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="52" Count="0" />
+      <LineId Id="104" Count="0" />
       <LineId Id="69" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="100" Count="1" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="103" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="83" Count="0" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="78" Count="0" />
       <LineId Id="74" Count="2" />
       <LineId Id="70" Count="0" />
       <LineId Id="72" Count="0" />
@@ -97,6 +110,8 @@ END_CASE
       <LineId Id="56" Count="0" />
       <LineId Id="44" Count="0" />
       <LineId Id="73" Count="0" />
+      <LineId Id="106" Count="1" />
+      <LineId Id="110" Count="0" />
       <LineId Id="63" Count="1" />
       <LineId Id="84" Count="0" />
       <LineId Id="65" Count="3" />
