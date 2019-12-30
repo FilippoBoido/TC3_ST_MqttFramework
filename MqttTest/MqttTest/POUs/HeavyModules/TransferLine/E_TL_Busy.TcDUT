@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="E_TL_Busy" Id="{196ef372-6d38-4a30-8a23-4e8c520c63ff}">
+    <Declaration><![CDATA[
+TYPE E_TL_Busy :
+(
+	eTlBusyStart := 0,
+	eTlStartEntranceConveyor,
+	eTlStartUpwardsConveyor,
+	eTlExecutePalletizer,
+	eTlSignalError
+)UINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

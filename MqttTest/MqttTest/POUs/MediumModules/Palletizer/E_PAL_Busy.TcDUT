@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="E_PAL_Busy" Id="{175432ff-b200-404b-8a01-65439cb39b54}">
+    <Declaration><![CDATA[
+TYPE E_PAL_Busy :
+(
+	ePALStart := 0,
+	ePALActivateTurn,
+	ePALActivateBeltForw,
+	ePALWaitForPackages,
+	ePALPushPackages,
+	ePALRetractPusher,
+	ePALClamp,
+	ePALRetractClamper,
+	ePALWaitForPallet,
+	ePALOpenPlate,
+	ePALClosePlate,
+	ePALElevatorUp,
+	ePALElevatorDown,
+	ePALStartChains,
+	ePALStopChains
+	
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

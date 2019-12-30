@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_Turntable" Id="{5a7b578a-85d4-41c6-b84c-ca292559fdbd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Turntable
+VAR_INPUT
+
+
+
+END_VAR
+VAR_OUTPUT
+
+	bTurn 		: BOOL;
+	bRollPlus	: BOOL;
+	bRollMinus 	: BOOL;
+	bFrontLimit : BOOL;
+	bBackLimit	: BOOL;
+	
+END_VAR
+VAR
+
+	fbFrontLimit : BoolIn;
+	fbBackLimit : BoolIn;
+	
+	fbTurn : BoolOut;
+	fbRollPlus : BoolOut;
+	fbRollMinus : BoolOut;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bTurn := fbTurn.getValue;
+bRollPlus := fbRollPlus.getValue;
+bRollMinus := fbRollMinus.getValue;
+bFrontLimit := fbFrontLimit.getValue;
+bBackLimit	:= fbBackLimit.getValue;]]></ST>
+    </Implementation>
+    <Method Name="RollMinus" Id="{207a62c8-6d7f-4007-bdf2-cf32530a58e7}">
+      <Declaration><![CDATA[METHOD RollMinus : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbRollMinus.setValue := TRUE;
+fbRollPlus.setValue := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RollPlus" Id="{ec53d457-a63c-4bd8-a2a4-20f5059e9164}">
+      <Declaration><![CDATA[METHOD RollPlus : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbRollPlus.setValue := TRUE;
+fbRollMinus.setValue := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StopRolling" Id="{2419d82f-e24f-4160-8b39-e47e4f6a13da}">
+      <Declaration><![CDATA[METHOD StopRolling : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbRollMinus.setValue := FALSE;
+fbRollPlus.setValue := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Turn" Id="{1c28c895-9ab6-4303-bd55-9592fe01ec59}">
+      <Declaration><![CDATA[METHOD Turn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbTurn.setValue := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Unturn" Id="{b36ebc82-ea4b-4c3f-b5ca-518e79da2d00}">
+      <Declaration><![CDATA[METHOD Unturn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbTurn.setValue := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Turntable">
+      <LineId Id="9" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="38" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Turntable.RollMinus">
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Turntable.RollPlus">
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Turntable.StopRolling">
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Turntable.Turn">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Turntable.Unturn">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

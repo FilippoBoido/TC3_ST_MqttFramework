@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_PresenceDetector" Id="{920e735c-29a1-439c-8f37-f621dfe385b4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PresenceDetector
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bAllPartsPresent : BOOL;
+END_VAR
+VAR
+	aSensors : ARRAY[1..3] OF FB_Sensor;
+	i: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF aSensors[1].bSignal
+ AND aSensors[2].bSignal
+ AND aSensors[3].bSignal
+THEN
+	bAllPartsPresent := TRUE;
+ELSE
+	bAllPartsPresent :=FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_PresenceDetector">
+      <LineId Id="14" Count="0" />
+      <LineId Id="17" Count="6" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

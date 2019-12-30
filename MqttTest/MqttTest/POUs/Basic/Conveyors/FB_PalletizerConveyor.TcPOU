@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_PalletizerConveyor" Id="{fedbe3e3-7fa7-4ce9-a006-c2d0089d037d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PalletizerConveyor EXTENDS FB_Conveyor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	bStartBackward AT%Q* : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="FB_PalletizerConveyor">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_PalletizerElevator" Id="{bd2ea0f4-c169-461a-88aa-19be27edaaa5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PalletizerElevator EXTENDS FB_Elevator
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	isMoving : BOOL;
+END_VAR
+VAR
+	fbElevatorMoving : FB_Sensor;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[isMoving := fbElevatorMoving.bSignal;]]></ST>
+    </Implementation>
+    <Method Name="MoveDown" Id="{73b801bf-e72e-41ab-ac7b-579ada3843c5}">
+      <Declaration><![CDATA[METHOD MoveDown : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MoveUp" Id="{c7f781fc-6698-47a1-8530-f8c7485ab296}">
+      <Declaration><![CDATA[METHOD MoveUp : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StepDown" Id="{3890aa0b-5570-4bd0-b4f2-65dbeb3ba42b}">
+      <Declaration><![CDATA[METHOD StepDown : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StepUp" Id="{3875e7be-0bef-425d-a77a-139b2a0aa8ce}">
+      <Declaration><![CDATA[METHOD StepUp : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_PalletizerElevator">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PalletizerElevator.MoveDown">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PalletizerElevator.MoveUp">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PalletizerElevator.StepDown">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PalletizerElevator.StepUp">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

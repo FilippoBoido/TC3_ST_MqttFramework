@@ -2,74 +2,120 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{d13201a7-77b4-4686-b8f3-e4e5d0bc46f7}</ProjectGuid>
+    <ProjectGuid>{181daa07-dfb2-43ee-a732-ff6e42cfbf22}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>MqttFramework</Name>
+    <Name>MqttTest</Name>
     <ProgramVersion>3.1.4023.0</ProgramVersion>
-    <Application>{62add179-4caa-4ac5-bf25-0221c7b9ee79}</Application>
-    <TypeSystem>{01726a30-28cd-401f-81ee-eb899696ad49}</TypeSystem>
-    <Implicit_Task_Info>{cc3467a9-032d-440f-99b9-a766c50b80a0}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{432735b0-f2e3-4cf4-ae24-a35a4ece3395}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{bbb7ed5e-bff6-46b4-bc1e-6cccbd2386c0}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{a65bc284-66e3-4484-88a3-74b7e7a624e6}</LibraryReferences>
-    <Company>FactoryAutomation</Company>
-    <Released>false</Released>
-    <Title>MqttFramework</Title>
-    <ProjectVersion>1.0.0.0</ProjectVersion>
-    <Author>Filippo Boido</Author>
+    <Application>{3981b849-7f85-4059-af91-1801c0590d93}</Application>
+    <TypeSystem>{28f307ae-889a-47d5-8801-4ae97fb854c9}</TypeSystem>
+    <Implicit_Task_Info>{9ceb62af-1d57-4fb2-91dd-6ea5c43f72aa}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{b0cc9cfb-34f9-427e-b64b-4550b663be54}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{157d508c-24b3-4601-a4e3-27979d119e6f}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{7d48dc55-8dd4-48fa-9e87-9d984cb8d206}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DUTs\E_AdsConnectorBusy.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\E_MainStep.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\ST_MqttAdsShell.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\ST_MqttLifePackage.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\ST_MqttPayload.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\ADS.TcPOU">
+    <Compile Include="POUs\Basic\Conveyors\FB_BeltConveyor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\AdsConnector.TcPOU">
+    <Compile Include="POUs\Basic\Conveyors\FB_Conveyor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\AdsSupplier.TcPOU">
+    <Compile Include="POUs\Basic\Conveyors\FB_PalletizerConveyor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MachineCycle.TcPOU">
+    <Compile Include="POUs\Basic\Conveyors\FB_RollerConveyor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Basic\Cylinder\FB_Cylinder.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Basic\Elevator\FB_Elevator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Basic\Elevator\FB_PalletizerElevator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Basic\Sensor\FB_Sensor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\LineRegulator\FB_LineRegulator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\E_TL_BeltConveyors.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\E_TL_Busy.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\E_TL_RollerConveyors.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\E_TL_Sensors.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\FB_TransferLine.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\StepChainSections\FB_BeltConveyors.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\StepChainSections\FB_PostPalletizer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\StepChainSections\FB_PrePalletizer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\LightModules\PresenceDetector\FB_PresenceDetector.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\LightModules\Turntable\FB_Turntable.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MqttClient.TcPOU">
+    <Compile Include="POUs\MediumModules\Palletizer\E_PAL_Busy.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Version\Global_Version.TcGVL">
+    <Compile Include="POUs\MediumModules\Palletizer\FB_Palletizer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="Version" />
+    <Folder Include="POUs\Basic" />
+    <Folder Include="POUs\Basic\Conveyors" />
+    <Folder Include="POUs\Basic\Cylinder" />
+    <Folder Include="POUs\Basic\Elevator" />
+    <Folder Include="POUs\Basic\Sensor" />
+    <Folder Include="POUs\HeavyModules\LineRegulator" />
+    <Folder Include="POUs\HeavyModules\TransferLine" />
+    <Folder Include="POUs\HeavyModules\TransferLine\StepChainSections" />
+    <Folder Include="POUs\LightModules" />
+    <Folder Include="POUs\LightModules\PresenceDetector" />
+    <Folder Include="POUs\LightModules\Turntable" />
+    <Folder Include="POUs\MediumModules" />
+    <Folder Include="POUs\MediumModules\Palletizer" />
+    <Folder Include="POUs\HeavyModules" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderReference Include="ChainControllerLib">
+      <DefaultResolution>ChainControllerLib, * (FactoryAutomation)</DefaultResolution>
+      <Namespace>ChainControllerLib</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="MqttFramework">
+      <DefaultResolution>MqttFramework, * (FactoryAutomation)</DefaultResolution>
+      <Namespace>MqttFramework</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="StateMachineLib">
       <DefaultResolution>StateMachineLib, * (FactoryAutomation)</DefaultResolution>
       <Namespace>StateMachineLib</Namespace>
@@ -86,31 +132,16 @@
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
     </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_Utilities">
-      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_Utilities</Namespace>
-    </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
-    <PlaceholderReference Include="UML State Chart Types">
-      <DefaultResolution>UML Statechart Types, 4.0.5.0 (3S - Smart Software Solutions GmbH)</DefaultResolution>
-      <Namespace>UML_SC</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-      <ResolverGuid>d9a6b70a-92f0-4827-8ca3-8ce8a61652d9</ResolverGuid>
-    </PlaceholderReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="MqttFramework.tmc">
-      <SubType>Content</SubType>
-    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-        <Data>
-          <o xml:space="preserve" t="OptionKey">
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -135,12 +166,6 @@
           </d>
           <d n="Values" t="Hashtable" />
         </o>
-        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
-        <o>
-          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
-          <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" />
-        </o>
         <v>{40450F57-0AA3-4216-96F3-5444ECB29763}</v>
         <o>
           <v n="Name">"{40450F57-0AA3-4216-96F3-5444ECB29763}"</v>
@@ -153,13 +178,13 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-        </Data>
-        <TypeList>
-          <Type n="Hashtable">System.Collections.Hashtable</Type>
-          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-          <Type n="String">System.String</Type>
-        </TypeList>
-      </XmlArchive>
+  </Data>
+  <TypeList>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

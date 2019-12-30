@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Refactors>
+  <Renames>
+    <RenamedType>
+      <Type guid="eb206bc1-d4a6-42f3-9c9e-531ede3780e1">BELTCONVEYORSSECTION</Type>
+      <From>BeltConveyorsSection</From>
+      <To>FB_BeltConveyors</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="5dff49bc-e989-4c97-b519-5d232efdac58">PREPALLETIZERROLLERSECTION</Type>
+      <From>PrePalletizerRollerSection</From>
+      <To>FB_PrePalletizer</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="d145f42d-ec17-4f04-88d0-151eae25ee5d">FB_POSTPALLETIZERROLLER</Type>
+      <From>PostPalletizerRollerSection</From>
+      <To>FB_PostPalletizer</To>
+    </RenamedType>
+  </Renames>
+</Refactors>

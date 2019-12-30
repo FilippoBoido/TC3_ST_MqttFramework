@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_LineRegulator" Id="{ca3d4937-9986-4e8e-b7ee-5deb908a267b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LineRegulator EXTENDS MqttFramework.StateMachineLib.StateMachine
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbTurntable : FB_Turntable;
+	aRollerConveyors : ARRAY[1..3] OF FB_RollerConveyor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Super^();]]></ST>
+    </Implementation>
+    <LineIds Name="FB_LineRegulator">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
