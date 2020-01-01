@@ -4,15 +4,27 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Conveyor 
 VAR_INPUT
 END_VAR
+
 VAR_OUTPUT
+	bStart  : BOOL;
 END_VAR
 VAR
-	bStart AT%Q* : BOOL;
+	fbStart : BoolOut;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bStart := fbStart.getValue;]]></ST>
+    </Implementation>
+    <Property Name="getStart" Id="{6370b0c0-d40e-456d-89ce-6f31c418ed60}">
+      <Declaration><![CDATA[PROPERTY getStart : BoolOut]]></Declaration>
+      <Get Name="Get" Id="{489b8359-b98c-42ae-afe2-3461bd22238e}">
+        <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
-    <Implementation>
-      <ST><![CDATA[]]></ST>
-    </Implementation>
+        <Implementation>
+          <ST><![CDATA[getStart := fbStart;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="Off" Id="{f085c888-d730-4182-bd45-298546b54d73}">
       <Declaration><![CDATA[METHOD Off : BOOL
 VAR_INPUT
@@ -33,6 +45,9 @@ END_VAR
     </Method>
     <LineIds Name="FB_Conveyor">
       <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Conveyor.getStart.Get">
+      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_Conveyor.Off">
       <LineId Id="5" Count="0" />

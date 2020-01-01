@@ -5,16 +5,33 @@
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
+	bStartBackward : BOOL;
 END_VAR
-VAR
-	bStartBackward AT%Q* : BOOL;
+VAR	
+	fbStartBackward : BoolOut;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[SUPER^();
+bStartBackward := fbStartBackward.getValue;]]></ST>
     </Implementation>
+    <Property Name="getStartBackward" Id="{117b1f55-dc43-4a43-93cf-132871f6c536}">
+      <Declaration><![CDATA[PROPERTY getStartBackward : BoolOut]]></Declaration>
+      <Get Name="Get" Id="{a41fe51c-870b-4bfe-be0f-d61351090d79}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[getStartBackward := fbStartBackward;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <LineIds Name="FB_PalletizerConveyor">
       <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PalletizerConveyor.getStartBackward.Get">
+      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
