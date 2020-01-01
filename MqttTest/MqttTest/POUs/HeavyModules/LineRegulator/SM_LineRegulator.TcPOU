@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="SM_LineRegulator" Id="{ca3d4937-9986-4e8e-b7ee-5deb908a267b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SM_LineRegulator EXTENDS StateMachine
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbTurntable : FB_Turntable;
+	aRollerConveyors : ARRAY[1..3] OF FB_RollerConveyor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Super^();]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{5f49f79a-dd7d-411c-abbd-7df000596daa}">
+      <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+		]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{239c3776-b310-4e44-8c9a-3b822be85443}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{8991d786-6df6-47cb-9e47-3ad5344b1f79}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{61709bba-0e18-44c6-961b-6552433808b6}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{6b592004-8cf2-4348-b3e7-517e0f77b060}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{f9a8f055-f81d-4c23-82e5-c30d5480dd80}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{d736384e-810f-4ff5-9820-b539fdf97b0f}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SM_LineRegulator">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Busy">
+      <LineId Id="39" Count="0" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Ready">
+      <LineId Id="23" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

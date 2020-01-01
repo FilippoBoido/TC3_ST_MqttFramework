@@ -2,19 +2,34 @@
 <Refactors>
   <Renames>
     <RenamedType>
-      <Type guid="eb206bc1-d4a6-42f3-9c9e-531ede3780e1">BELTCONVEYORSSECTION</Type>
-      <From>BeltConveyorsSection</From>
-      <To>FB_BeltConveyors</To>
+      <Type guid="eb206bc1-d4a6-42f3-9c9e-531ede3780e1">FB_BELTCONVEYORS</Type>
+      <From>FB_BeltConveyors</From>
+      <To>SC_BeltConveyors</To>
     </RenamedType>
     <RenamedType>
-      <Type guid="5dff49bc-e989-4c97-b519-5d232efdac58">PREPALLETIZERROLLERSECTION</Type>
-      <From>PrePalletizerRollerSection</From>
-      <To>FB_PrePalletizer</To>
+      <Type guid="d145f42d-ec17-4f04-88d0-151eae25ee5d">FB_POSTPALLETIZER</Type>
+      <From>FB_PostPalletizer</From>
+      <To>SC_PostPalletizer</To>
     </RenamedType>
     <RenamedType>
-      <Type guid="d145f42d-ec17-4f04-88d0-151eae25ee5d">FB_POSTPALLETIZERROLLER</Type>
-      <From>PostPalletizerRollerSection</From>
-      <To>FB_PostPalletizer</To>
+      <Type guid="5dff49bc-e989-4c97-b519-5d232efdac58">FB_PREPALLETIZER</Type>
+      <From>FB_PrePalletizer</From>
+      <To>SC_PrePalletizer</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="ca3d4937-9986-4e8e-b7ee-5deb908a267b">FB_LINEREGULATOR</Type>
+      <From>FB_LineRegulator</From>
+      <To>SM_LineRegulator</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="2e7b366f-b9ef-4b13-bd70-7031bb32b800">FB_TRANSFERLINE</Type>
+      <From>FB_TransferLine</From>
+      <To>SM_TransferLine</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="73a1f3d2-201c-42a5-94a2-081d42f8b358">FB_PALLETIZER</Type>
+      <From>FB_Palletizer</From>
+      <To>SM_Palletizer</To>
     </RenamedType>
   </Renames>
 </Refactors>

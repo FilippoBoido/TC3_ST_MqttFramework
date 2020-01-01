@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="SC_BeltConveyors" Id="{eb206bc1-d4a6-42f3-9c9e-531ede3780e1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SC_BeltConveyors EXTENDS FB_Chain
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	aBeltConveyors : ARRAY[1..2] OF FB_BeltConveyor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Super^();]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{bc928646-e27f-4667-a24b-dd5dfb773133}">
+      <Declaration><![CDATA[METHOD PROTECTED Busy : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE fbStepWorkerBusy.uiStep OF
+
+	eTlBusyStart: 
+	
+		//At start we check how many packages have passed the fbCounterSensor
+		IF uiPackageCounter < 3
+		THEN
+		
+			//activate the conveyors
+			fbStepWorkerBusy.mNextStep(eTlStartEntranceConveyor);
+			
+		ELSIF uiPackageCounter = 3
+		 AND NOT fbPalletizer.bAllPartsPresent
+		THEN
+ 			//A package needs to reach the palletizer or a sensor is malfunctioning
+			aBeltConveyors[eBeltConveyorEntrance].Off();
+			fbStepWorkerBusy.mNextStep(eTlStartUpwardsConveyor);
+		ELSIF uiPackageCounter = 3
+		 AND fbPalletizer.bAllPartsPresent
+	 	THEN
+			//Execute the Palletizer
+			aBeltConveyors[eBeltConveyorUpwards].Off();
+			fbStepWorkerBusy.mNextStep(eTlExecutePalletizer);
+		ELSIF uiPackageCounter > 3
+		THEN
+			//Error
+		END_IF
+		
+	eTlStartEntranceConveyor:
+		
+		aBeltConveyors[eBeltConveyorEntrance].On();
+		fbStepWorkerBusy.mAddCondition(fbCounterSensor.getSignal);
+		fbStepWorkerBusy.mNextStep(eTlStartUpwardsConveyor);
+
+	eTlStartUpwardsConveyor:
+	
+		aBeltConveyors[eBeltConveyorUpwards].On();
+		fbStepWorkerBusy.mNextStep(eTlExecutePalletizer);
+			 
+	eTlExecutePalletizer:
+		 
+		fbPalletizer.Execute();
+		fbStepWorkerBusy.mAddCondition(fbPalletizer.getDoneCycle);
+		fbStepWorkerBusy.mNextStep(eTlBusyStart);
+		 
+	eTlSignalError:
+	
+		fbStepWorkerBusy.mNextStep(eTlBusyStart);
+		Fault();	
+		
+		
+END_CASE
+		
+		]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{60b47e3f-b483-4a78-9b11-181870d715af}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{27b5e8b9-8a47-4715-955b-04b9fa161379}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{4f617a10-924c-49bc-8017-03fbd4efa32e}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{63190395-989a-4aa6-8d27-eb5dcd5fed9b}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{ff95d6cc-d43e-4fd3-bc45-0cca02bf3326}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{d4b9dfaa-bf2c-4231-a754-ca38612c22a8}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SC_BeltConveyors">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_BeltConveyors.Busy">
+      <LineId Id="68" Count="51" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_BeltConveyors.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_BeltConveyors.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_BeltConveyors.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_BeltConveyors.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_BeltConveyors.Ready">
+      <LineId Id="23" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_BeltConveyors.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

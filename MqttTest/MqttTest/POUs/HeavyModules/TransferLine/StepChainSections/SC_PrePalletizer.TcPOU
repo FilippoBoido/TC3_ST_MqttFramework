@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="SC_PrePalletizer" Id="{5dff49bc-e989-4c97-b519-5d232efdac58}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SC_PrePalletizer EXTENDS FB_Chain
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Super^();]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{b4960330-9bf6-4d42-8bb8-1d990e9bb531}">
+      <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+		]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{b6393260-4a97-48b4-9678-ce4cc88b9229}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{54eba9a7-05d0-49e7-ae84-357a62c152ff}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{c1ac30ae-7cbf-4b3c-8c5e-e45fdf7336c2}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{a3187a60-cfef-4867-a914-8a22f27efc5b}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{f386c72d-a0bb-42a7-afcd-096615a8b827}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{8c3351a7-4525-4e7c-b2e7-a30d64b5a1c4}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SC_PrePalletizer">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Busy">
+      <LineId Id="39" Count="0" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Ready">
+      <LineId Id="23" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

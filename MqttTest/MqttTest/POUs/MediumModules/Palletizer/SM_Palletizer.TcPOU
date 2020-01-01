@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="FB_Palletizer" Id="{73a1f3d2-201c-42a5-94a2-081d42f8b358}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Palletizer EXTENDS StateMachine
+  <POU Name="SM_Palletizer" Id="{73a1f3d2-201c-42a5-94a2-081d42f8b358}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SM_Palletizer EXTENDS StateMachine
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -67,6 +67,15 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="Idle" Id="{c949880c-6009-49c1-9143-74a28d29b1c1}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Init" Id="{d70eb0e0-8e12-4f46-8c48-9d942d266afa}">
       <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
 VAR_INPUT
@@ -74,6 +83,15 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{ee19a450-41b7-476e-aa8a-75b7d82d8dde}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="Ready" Id="{42cd7ed1-7213-436f-b42d-812333345c3e}">
@@ -85,28 +103,46 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_Palletizer">
+    <Method Name="Waiting" Id="{c788c4e8-167a-44b4-9b42-c1f47d88d166}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SM_Palletizer">
       <LineId Id="9" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="51" Count="0" />
       <LineId Id="22" Count="4" />
     </LineIds>
-    <LineIds Name="FB_Palletizer.Busy">
+    <LineIds Name="SM_Palletizer.Busy">
       <LineId Id="5" Count="0" />
       <LineId Id="7" Count="0" />
       <LineId Id="6" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Palletizer.Error">
+    <LineIds Name="SM_Palletizer.Error">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Palletizer.getDoneCycle.Get">
+    <LineIds Name="SM_Palletizer.getDoneCycle.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Palletizer.Init">
+    <LineIds Name="SM_Palletizer.Idle">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Palletizer.Ready">
+    <LineIds Name="SM_Palletizer.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Ready">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Waiting">
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

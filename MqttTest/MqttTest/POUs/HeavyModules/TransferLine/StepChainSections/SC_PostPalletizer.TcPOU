@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="SC_PostPalletizer" Id="{d145f42d-ec17-4f04-88d0-151eae25ee5d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SC_PostPalletizer EXTENDS FB_Chain
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Super^();]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{e4f83139-3ef9-4270-9b46-cb364ed0aa63}">
+      <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+		]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{227e1a4a-9181-4c72-9758-791ceeadca23}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{e8414480-ea7e-45a9-aa9a-1779a2dff0da}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{81442e9f-c1c0-4557-ad89-943fb77a69ab}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{8ab7a1a5-fb9e-4cb0-aa6f-cc8da359eb79}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{93703002-b3cb-4109-9d67-57373c0d509a}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{03e2dc8c-1e89-4ce7-a1d1-0349de8fddc8}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SC_PostPalletizer">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Busy">
+      <LineId Id="39" Count="0" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Ready">
+      <LineId Id="23" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
