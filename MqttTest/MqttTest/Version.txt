@@ -1,3 +1,8 @@
-1.0.0.1:	Boido	010120
+1.0.1.1:	Boido	010120
+
 Changed naming convention for main modules.
 The first 2 letters give a hint on the inheritance relationship of the FB.
+
+1.0.2.2:	Boido	010120
+
+Naming convention adjustments.

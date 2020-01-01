@@ -2,16 +2,28 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="SC_BeltConveyors" Id="{eb206bc1-d4a6-42f3-9c9e-531ede3780e1}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK SC_BeltConveyors EXTENDS FB_Chain
-VAR_INPUT
+VAR_IN_OUT
+	ioPalletizer : SM_Palletizer;
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
 	aBeltConveyors : ARRAY[1..2] OF FB_BeltConveyor;
+	fbCounterSensor : FB_Sensor;
+	i : INT;
+	uiPackageCounter : UINT;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Super^();]]></ST>
+      <ST><![CDATA[SUPER^();
+
+FOR i := 1 TO eMaxNumBeltConveyors
+DO
+	
+	aBeltConveyors[i]();
+
+END_FOR]]></ST>
     </Implementation>
     <Method Name="Busy" Id="{bc928646-e27f-4667-a24b-dd5dfb773133}">
       <Declaration><![CDATA[METHOD PROTECTED Busy : BOOL
@@ -21,27 +33,27 @@ END_VAR
       <Implementation>
         <ST><![CDATA[CASE fbStepWorkerBusy.uiStep OF
 
-	eTlBusyStart: 
+	eBusySCStart: 
 	
 		//At start we check how many packages have passed the fbCounterSensor
 		IF uiPackageCounter < 3
 		THEN
 		
 			//activate the conveyors
-			fbStepWorkerBusy.mNextStep(eTlStartEntranceConveyor);
+			fbStepWorkerBusy.mNextStep(eStartEntranceConveyor);
 			
 		ELSIF uiPackageCounter = 3
-		 AND NOT fbPalletizer.bAllPartsPresent
+		 AND NOT ioPalletizer.bAllPartsPresent
 		THEN
  			//A package needs to reach the palletizer or a sensor is malfunctioning
 			aBeltConveyors[eBeltConveyorEntrance].Off();
-			fbStepWorkerBusy.mNextStep(eTlStartUpwardsConveyor);
+			fbStepWorkerBusy.mNextStep(eStartUpwardsConveyor);
 		ELSIF uiPackageCounter = 3
-		 AND fbPalletizer.bAllPartsPresent
+		 AND ioPalletizer.bAllPartsPresent
 	 	THEN
 			//Execute the Palletizer
 			aBeltConveyors[eBeltConveyorUpwards].Off();
-			fbStepWorkerBusy.mNextStep(eTlExecutePalletizer);
+			fbStepWorkerBusy.mNextStep(eExecutePalletizer);
 		ELSIF uiPackageCounter > 3
 		THEN
 			//Error
@@ -51,25 +63,24 @@ END_VAR
 		
 		aBeltConveyors[eBeltConveyorEntrance].On();
 		fbStepWorkerBusy.mAddCondition(fbCounterSensor.getSignal);
-		fbStepWorkerBusy.mNextStep(eTlStartUpwardsConveyor);
+		fbStepWorkerBusy.mNextStep(eStartUpwardsConveyor);
 
 	eTlStartUpwardsConveyor:
 	
 		aBeltConveyors[eBeltConveyorUpwards].On();
-		fbStepWorkerBusy.mNextStep(eTlExecutePalletizer);
+		fbStepWorkerBusy.mNextStep(eExecutePalletizer);
 			 
 	eTlExecutePalletizer:
 		 
-		fbPalletizer.Execute();
-		fbStepWorkerBusy.mAddCondition(fbPalletizer.getDoneCycle);
-		fbStepWorkerBusy.mNextStep(eTlBusyStart);
+		ioPalletizer.Execute();
+		fbStepWorkerBusy.mAddCondition(ioPalletizer.getDoneCycle);
+		fbStepWorkerBusy.mNextStep(eBusySCStart);
 		 
 	eTlSignalError:
 	
-		fbStepWorkerBusy.mNextStep(eTlBusyStart);
+		fbStepWorkerBusy.mNextStep(eBusySCStart);
 		Fault();	
-		
-		
+			
 END_CASE
 		
 		]]></ST>
@@ -79,9 +90,17 @@ END_CASE
       <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
 VAR_INPUT
 END_VAR
-]]></Declaration>
+VAR
+	i : INT;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[FOR i := 1 TO 3 
+DO
+
+	aBeltConveyors[i].Off();
+	
+END_FOR
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Idle" Id="{27b5e8b9-8a47-4715-955b-04b9fa161379}">
@@ -131,13 +150,23 @@ END_VAR
     </Method>
     <LineIds Name="SC_BeltConveyors">
       <LineId Id="9" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="28" Count="0" />
     </LineIds>
     <LineIds Name="SC_BeltConveyors.Busy">
-      <LineId Id="68" Count="51" />
+      <LineId Id="68" Count="49" />
+      <LineId Id="119" Count="0" />
       <LineId Id="39" Count="0" />
       <LineId Id="38" Count="0" />
     </LineIds>
     <LineIds Name="SC_BeltConveyors.Error">
+      <LineId Id="20" Count="1" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SC_BeltConveyors.Idle">

@@ -18,7 +18,7 @@
     <Company>FactoryAutomation</Company>
     <Released>false</Released>
     <Title>MqttTest</Title>
-    <ProjectVersion>1.0.0.1</ProjectVersion>
+    <ProjectVersion>1.0.2.2</ProjectVersion>
     <Author>Filippo Boido</Author>
   </PropertyGroup>
   <ItemGroup>
@@ -52,28 +52,31 @@
     <Compile Include="POUs\HeavyModules\LineRegulator\SM_LineRegulator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\HeavyModules\TransferLine\E_TL_BeltConveyors.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\HeavyModules\TransferLine\E_TL_Busy.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\HeavyModules\TransferLine\E_TL_RollerConveyors.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\HeavyModules\TransferLine\E_TL_Sensors.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\HeavyModules\TransferLine\SM_TransferLine.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\HeavyModules\TransferLine\StepChainSections\SC_BeltConveyors.TcPOU">
+    <Compile Include="POUs\HeavyModules\TransferLine\StepChains\BeltConveyors\SC_ACTUATOR_BeltConveyors.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\HeavyModules\TransferLine\StepChainSections\SC_PostPalletizer.TcPOU">
+    <Compile Include="POUs\HeavyModules\TransferLine\StepChains\BeltConveyors\SC_BUSY_BeltConveyors.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\HeavyModules\TransferLine\StepChainSections\SC_PrePalletizer.TcPOU">
+    <Compile Include="POUs\HeavyModules\TransferLine\StepChains\BeltConveyors\SC_SENSOR_BeltConveyors.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\StepChains\BeltConveyors\SC_BeltConveyors.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\StepChains\PostPalletizer\SC_PostPalletizer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeavyModules\TransferLine\StepChains\PrePalletizer\SC_PrePalletizer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\LightModules\PresenceDetector\FB_PresenceDetector.TcPOU">
@@ -102,7 +105,10 @@
     <Folder Include="POUs\Basic\Sensor" />
     <Folder Include="POUs\HeavyModules\LineRegulator" />
     <Folder Include="POUs\HeavyModules\TransferLine" />
-    <Folder Include="POUs\HeavyModules\TransferLine\StepChainSections" />
+    <Folder Include="POUs\HeavyModules\TransferLine\StepChains" />
+    <Folder Include="POUs\HeavyModules\TransferLine\StepChains\BeltConveyors" />
+    <Folder Include="POUs\HeavyModules\TransferLine\StepChains\PrePalletizer" />
+    <Folder Include="POUs\HeavyModules\TransferLine\StepChains\PostPalletizer" />
     <Folder Include="POUs\LightModules" />
     <Folder Include="POUs\LightModules\PresenceDetector" />
     <Folder Include="POUs\LightModules\Turntable" />
@@ -155,11 +161,11 @@
         </Parameter>
         <Parameter>
           <Key>REVISION</Key>
-          <Value>0</Value>
+          <Value>2</Value>
         </Parameter>
         <Parameter>
           <Key>BUILD</Key>
-          <Value>1</Value>
+          <Value>2</Value>
         </Parameter>
       </Parameters>
     </PlaceholderReference>
