@@ -10,17 +10,17 @@ VAR_OUTPUT
 	
 END_VAR
 VAR
-	fbPallBeltConveyor : FB_PalletizerConveyor;
-	fbPallChainConveyor : FB_PalletizerConveyor;
-	fbPallElevator : FB_PalletizerElevator;
-	fbPushCyl : FB_Cylinder;
-	fbTurnCyl : FB_Cylinder;
-	fbPlateCyl : FB_Cylinder;
-	fbClampCyl : FB_Cylinder;
-	fbClampedSen : FB_Sensor;
-	fbPlateLimitSen : FB_Sensor;
-	fbPusherLimitSen : FB_Sensor;
-	fbPresenceDetector : FB_PresenceDetector;
+	fbPallBeltConveyor : PalletizerConveyor;
+	fbPallChainConveyor : PalletizerConveyor;
+	fbPallElevator : PalletizerElevator;
+	fbPushCyl : Cylinder;
+	fbTurnCyl : Cylinder;
+	fbPlateCyl : Cylinder;
+	fbClampCyl : Cylinder;
+	fbClampedSen : Sensor;
+	fbPlateLimitSen : Sensor;
+	fbPusherLimitSen : Sensor;
+	fbPresenceDetector : PresenceDetector;
 	fbDoneCycle : BoolOut;
 	fbStepWorkerBusy : FB_StepWorker;
 END_VAR

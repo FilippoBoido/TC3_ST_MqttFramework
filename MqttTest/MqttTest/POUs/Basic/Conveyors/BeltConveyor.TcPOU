@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="FB_RollerConveyor" Id="{b1585fb0-7b13-454c-bee3-cef58924ab6e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_RollerConveyor EXTENDS FB_Conveyor
+  <POU Name="BeltConveyor" Id="{ab6b7528-8ac8-4e7e-bc7d-2eb87e368d42}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK BeltConveyor EXTENDS Conveyor
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -12,7 +12,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[Super^();]]></ST>
     </Implementation>
-    <LineIds Name="FB_RollerConveyor">
+    <LineIds Name="BeltConveyor">
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>

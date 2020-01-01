@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="FB_Sensor" Id="{e931cece-00b8-480a-8d07-9e5455c458fa}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Sensor
+  <POU Name="Sensor" Id="{e931cece-00b8-480a-8d07-9e5455c458fa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Sensor
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -25,10 +25,10 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <LineIds Name="FB_Sensor">
+    <LineIds Name="Sensor">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Sensor.getSignal.Get">
+    <LineIds Name="Sensor.getSignal.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>

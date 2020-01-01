@@ -191,19 +191,19 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPushCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPushCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbTurnCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.fbTurnCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPlateCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPlateCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbClampCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.fbClampCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -259,19 +259,19 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPushCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPushCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbTurnCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.fbTurnCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPlateCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPlateCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbClampCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.fbClampCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -327,19 +327,19 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPushCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPushCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbTurnCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.fbTurnCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPlateCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPlateCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbClampCyl.bStart</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.fbClampCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>

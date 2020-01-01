@@ -8,8 +8,8 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	aBeltConveyors : ARRAY[1..2] OF FB_BeltConveyor;
-	fbCounterSensor : FB_Sensor;
+	aBeltConveyors : ARRAY[1..2] OF BeltConveyor;
+	fbCounterSensor : Sensor;
 	i : INT;
 	uiPackageCounter : UINT;
 	

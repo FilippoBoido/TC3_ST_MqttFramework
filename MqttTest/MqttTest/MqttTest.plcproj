@@ -18,44 +18,44 @@
     <Company>FactoryAutomation</Company>
     <Released>false</Released>
     <Title>MqttTest</Title>
-    <ProjectVersion>1.1.0.3</ProjectVersion>
+    <ProjectVersion>1.1.1.4</ProjectVersion>
     <Author>Filippo Boido</Author>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Basic\Conveyors\FB_BeltConveyor.TcPOU">
+    <Compile Include="POUs\Basic\Conveyors\BeltConveyor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Basic\Conveyors\FB_Conveyor.TcPOU">
+    <Compile Include="POUs\Basic\Conveyors\Conveyor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Basic\Conveyors\FB_PalletizerConveyor.TcPOU">
+    <Compile Include="POUs\Basic\Conveyors\PalletizerConveyor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Basic\Conveyors\FB_RollerConveyor.TcPOU">
+    <Compile Include="POUs\Basic\Conveyors\RollerConveyor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Basic\Cylinder\FB_Cylinder.TcPOU">
+    <Compile Include="POUs\Basic\Cylinder\Cylinder.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Basic\Elevator\FB_Elevator.TcPOU">
+    <Compile Include="POUs\Basic\Elevator\Elevator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Basic\Elevator\FB_PalletizerElevator.TcPOU">
+    <Compile Include="POUs\Basic\Elevator\PalletizerElevator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Basic\Sensor\FB_Sensor.TcPOU">
+    <Compile Include="POUs\Basic\Sensor\Sensor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\HeavyModules\LineRegulator\SM_LineRegulator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\HeavyModules\TransferLine\E_TL_Busy.TcDUT">
+    <Compile Include="POUs\HeavyModules\TransferLine\TL_BUSY.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\HeavyModules\TransferLine\E_TL_RollerConveyors.TcDUT">
+    <Compile Include="POUs\HeavyModules\TransferLine\TL_RollerConveyors.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\HeavyModules\TransferLine\SM_TransferLine.TcPOU">
@@ -79,10 +79,10 @@
     <Compile Include="POUs\HeavyModules\TransferLine\StepChains\PrePalletizer\SC_PrePalletizer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\LightModules\PresenceDetector\FB_PresenceDetector.TcPOU">
+    <Compile Include="POUs\LightModules\PresenceDetector\PresenceDetector.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\LightModules\Turntable\FB_Turntable.TcPOU">
+    <Compile Include="POUs\LightModules\Turntable\Turntable.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
@@ -161,11 +161,11 @@
         </Parameter>
         <Parameter>
           <Key>REVISION</Key>
-          <Value>0</Value>
+          <Value>1</Value>
         </Parameter>
         <Parameter>
           <Key>BUILD</Key>
-          <Value>3</Value>
+          <Value>4</Value>
         </Parameter>
       </Parameters>
     </PlaceholderReference>

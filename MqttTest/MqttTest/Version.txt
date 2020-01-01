@@ -12,3 +12,7 @@ Naming convention adjustments.
 Every IO variable is of type BoolIn or BoolOut.
 In the future when different types will be needed,
 also RealIn,RealOut,IntIn,IntOut etc.. will be added.
+
+1.1.1.4:	Boido	010120
+
+New StepWorkerLib v:1033, naming conventions fixes and IO adjustments

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="FB_Conveyor" Id="{b15311d8-a9f4-4077-9cec-ef51ff0c9999}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Conveyor 
+  <POU Name="Conveyor" Id="{b15311d8-a9f4-4077-9cec-ef51ff0c9999}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Conveyor 
 VAR_INPUT
 END_VAR
 
@@ -43,16 +43,16 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_Conveyor">
+    <LineIds Name="Conveyor">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Conveyor.getStart.Get">
+    <LineIds Name="Conveyor.getStart.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Conveyor.Off">
+    <LineIds Name="Conveyor.Off">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Conveyor.On">
+    <LineIds Name="Conveyor.On">
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

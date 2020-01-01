@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="FB_PalletizerElevator" Id="{bd2ea0f4-c169-461a-88aa-19be27edaaa5}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_PalletizerElevator EXTENDS FB_Elevator
+  <POU Name="PalletizerElevator" Id="{bd2ea0f4-c169-461a-88aa-19be27edaaa5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PalletizerElevator EXTENDS Elevator
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
 	isMoving : BOOL;
 END_VAR
 VAR
-	fbElevatorMoving : FB_Sensor;
+	fbElevatorMoving : Sensor;
 	
 END_VAR
 ]]></Declaration>
@@ -51,19 +51,19 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_PalletizerElevator">
+    <LineIds Name="PalletizerElevator">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="FB_PalletizerElevator.MoveDown">
+    <LineIds Name="PalletizerElevator.MoveDown">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_PalletizerElevator.MoveUp">
+    <LineIds Name="PalletizerElevator.MoveUp">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_PalletizerElevator.StepDown">
+    <LineIds Name="PalletizerElevator.StepDown">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_PalletizerElevator.StepUp">
+    <LineIds Name="PalletizerElevator.StepUp">
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

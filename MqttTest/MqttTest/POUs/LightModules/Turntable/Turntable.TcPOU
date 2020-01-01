@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="FB_Turntable" Id="{5a7b578a-85d4-41c6-b84c-ca292559fdbd}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Turntable
+  <POU Name="Turntable" Id="{5a7b578a-85d4-41c6-b84c-ca292559fdbd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Turntable
 VAR_INPUT
 
 
@@ -82,25 +82,25 @@ END_VAR
         <ST><![CDATA[fbTurn.setValue := FALSE;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_Turntable">
+    <LineIds Name="Turntable">
       <LineId Id="9" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="38" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Turntable.RollMinus">
+    <LineIds Name="Turntable.RollMinus">
       <LineId Id="5" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Turntable.RollPlus">
+    <LineIds Name="Turntable.RollPlus">
       <LineId Id="5" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Turntable.StopRolling">
+    <LineIds Name="Turntable.StopRolling">
       <LineId Id="5" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Turntable.Turn">
+    <LineIds Name="Turntable.Turn">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Turntable.Unturn">
+    <LineIds Name="Turntable.Unturn">
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

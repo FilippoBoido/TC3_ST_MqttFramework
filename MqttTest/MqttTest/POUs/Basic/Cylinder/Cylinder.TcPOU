@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="Cylinder" Id="{4dff6417-8bf1-4724-a444-43bb6b5867e9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Cylinder 
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bExtended : BOOL;
+	bExtend : BOOL;
+END_VAR
+VAR
+	fbExtendedSignal : BoolIn;
+	fbExtend : BoolOut;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bExtended := fbExtendedSignal.getValue;
+bExtend := fbExtend.getValue;
+]]></ST>
+    </Implementation>
+    <Property Name="getExtend" Id="{551c2e8d-9793-498c-9e33-32fe5f29706c}">
+      <Declaration><![CDATA[PROPERTY getExtend : BoolOut]]></Declaration>
+      <Get Name="Get" Id="{70090b27-bd92-4955-9176-2f006b2ffbdc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[getExtend := fbExtend;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="Cylinder">
+      <LineId Id="12" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Cylinder.getExtend.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
