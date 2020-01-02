@@ -150,10 +150,6 @@
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
-    <PlaceholderReference Include="VersionLib">
-      <DefaultResolution>VersionLib, * (FactoryAutomation)</DefaultResolution>
-      <Namespace>VersionLib</Namespace>
-    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="MqttTest.tmc">

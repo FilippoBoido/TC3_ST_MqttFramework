@@ -12,12 +12,20 @@ END_VAR
 
 Version.txt replaced with Version PRG
 
+1.0.2.2:	Boido	020120
+
+VersionLib removed.
+
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
       <LineId Id="9" Count="1" />
       <LineId Id="6" Count="2" />
+      <LineId Id="15" Count="0" />
       <LineId Id="11" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
