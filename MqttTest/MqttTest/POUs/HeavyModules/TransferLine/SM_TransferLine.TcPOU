@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="SM_TransferLine" Id="{2e7b366f-b9ef-4b13-bd70-7031bb32b800}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK SM_TransferLine EXTENDS StateMachine
 VAR_INPUT
@@ -17,9 +17,29 @@ VAR
 	
 	fbChainController : FB_ChainController;
 	
-	scBeltConveyors : SC_BeltConveyors(1,'scBeltConveyors',fbChainController);
-	scPostPalletizer : SC_PostPalletizer(2,'scPostPalletizer',fbChainController);
-	scPrePalletizer : SC_PrePalletizer(3,'scPrePalletizer',fbChainController);
+	scBeltConveyors : 
+		SC_BeltConveyors := 
+		(
+			init_uiChainNumber := 1, 
+			init_sChainName  := 'scBeltConveyors',
+			init_rChainController := fbChainController
+		);
+		
+	scPostPalletizer : 
+		SC_PostPalletizer := 
+		(
+			init_uiChainNumber := 2, 
+			init_sChainName  := 'scPostPalletizer',
+			init_rChainController := fbChainController
+		);
+		
+	scPrePalletizer : 
+		SC_PrePalletizer := 
+		(
+			init_uiChainNumber := 3, 
+			init_sChainName  := 'scPrePalletizer',
+			init_rChainController := fbChainController
+		);
  
 	fbTrig : R_TRIG;
 	uiPackageCounter : UINT;
