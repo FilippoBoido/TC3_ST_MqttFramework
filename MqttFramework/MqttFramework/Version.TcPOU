@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="Version" Id="{95618842-63da-482f-8530-b7fbf5f82af2}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Version
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+
+1.0.1.1:	Boido	020120
+
+Version.txt replaced with Version PRG
+
+*)]]></ST>
+    </Implementation>
+    <LineIds Name="Version">
+      <LineId Id="9" Count="1" />
+      <LineId Id="6" Count="2" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
