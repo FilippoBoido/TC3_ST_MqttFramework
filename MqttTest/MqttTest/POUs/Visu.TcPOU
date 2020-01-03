@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="Visu" Id="{653c8121-0635-4deb-8265-58d9590949a7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Visu
+VAR
+	bStartTL1 : BOOL;
+	bStartTL2 : BOOL;
+	bStartTL3 : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="Visu">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

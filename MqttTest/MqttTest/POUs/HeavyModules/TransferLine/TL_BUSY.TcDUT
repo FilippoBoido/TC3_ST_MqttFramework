@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <DUT Name="TL_BUSY" Id="{196ef372-6d38-4a30-8a23-4e8c520c63ff}">
     <Declaration><![CDATA[
 TYPE TL_BUSY :
 (
-	eTlBusyStart := 0,
-	eTlStartEntranceConveyor,
-	eTlStartUpwardsConveyor,
-	eTlExecutePalletizer,
+	eTlStartUnits := 0,
+	eTlCheckUnits,
 	eTlSignalError
 )UINT;
 END_TYPE

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="Conveyor" Id="{b15311d8-a9f4-4077-9cec-ef51ff0c9999}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Conveyor 
 VAR_INPUT
@@ -15,7 +15,7 @@ END_VAR]]></Declaration>
       <ST><![CDATA[bStart := fbStart.getValue;]]></ST>
     </Implementation>
     <Property Name="getStart" Id="{6370b0c0-d40e-456d-89ce-6f31c418ed60}">
-      <Declaration><![CDATA[PROPERTY getStart : BoolOut]]></Declaration>
+      <Declaration><![CDATA[PROPERTY getStart : I_StepCondition]]></Declaration>
       <Get Name="Get" Id="{489b8359-b98c-42ae-afe2-3461bd22238e}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -31,7 +31,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[fbStart.setValue := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="On" Id="{5d342f49-f715-42fd-b4a3-ca7fc5d5e1e7}">
@@ -40,7 +40,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[fbStart.setValue := TRUE;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="Conveyor">

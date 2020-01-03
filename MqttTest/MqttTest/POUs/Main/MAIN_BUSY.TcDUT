@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <DUT Name="MAIN_BUSY" Id="{c3b478f4-370b-4219-a0df-85b8f47a8821}">
+    <Declaration><![CDATA[
+TYPE MAIN_BUSY :
+(
+	eMainWaitStart := 0
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

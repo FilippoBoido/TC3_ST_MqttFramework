@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="MAIN" Id="{c83d4c06-b08c-4f63-b878-b3a4e7399e2e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+ aTransferLines  : ARRAY[1..3] OF SM_TransferLine;
+ fbSymbolPathStorage : SymbolPathStorage;
+ fbMainStepWorker : FB_StepWorker;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[aTransferLines[1]();
+aTransferLines[2]();
+aTransferLines[3]();
+
+CASE fbMainStepWorker.uiStep OF
+	
+	eMainWaitStart:
+	
+		IF Visu.bStartTL1
+		THEN
+			aTransferLines[1].Execute();
+		END_IF
+		
+		IF Visu.bStartTL2
+		THEN
+			aTransferLines[2].Execute();
+		END_IF
+		
+		IF Visu.bStartTL3
+		THEN
+			aTransferLines[3].Execute();
+		END_IF
+		
+		
+	
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="30" Count="2" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="2" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

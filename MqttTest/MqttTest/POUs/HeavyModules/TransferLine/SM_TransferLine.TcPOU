@@ -41,7 +41,7 @@ VAR
 			init_rChainController := fbChainController
 		);
  
-	fbTrig : R_TRIG;
+	
 	uiPackageCounter : UINT;
 	i : UINT;
 	bPackageOnTheWay : BOOL;
@@ -61,7 +61,16 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[CASE fbStepWorkerBusy.uiStep OF
-
+	eTlStartUnits:
+		scBeltConveyors.Execute();
+		fbStepWorkerBusy.mNextStep(eTlCheckUnits);
+	eTlCheckUnits:
+		IF scBeltConveyors.eStateMachine = E_StateMachine.eError
+		THEN
+			fbStepWorkerBusy.mNextStep(eTlSignalError);
+		END_IF
+	eTlSignalError:
+		Fault();
 END_CASE]]></ST>
       </Implementation>
     </Method>
@@ -129,6 +138,10 @@ END_VAR
     <LineIds Name="SM_TransferLine.Busy">
       <LineId Id="38" Count="0" />
       <LineId Id="69" Count="0" />
+      <LineId Id="73" Count="4" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="80" Count="1" />
       <LineId Id="68" Count="0" />
     </LineIds>
     <LineIds Name="SM_TransferLine.Error">

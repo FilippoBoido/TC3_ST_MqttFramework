@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="PresenceDetector" Id="{920e735c-29a1-439c-8f37-f621dfe385b4}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK PresenceDetector
 VAR_INPUT
@@ -9,13 +9,21 @@ VAR_OUTPUT
 END_VAR
 VAR
 	aSensors : ARRAY[1..3] OF Sensor;
+	fbTimer : TON;
 	i: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF aSensors[1].bSignal
- AND aSensors[2].bSignal
- AND aSensors[3].bSignal
+      <ST><![CDATA[aSensors[1]();
+aSensors[2]();
+aSensors[3]();
+fbTimer(
+	IN:= aSensors[1].bSignal
+		AND aSensors[2].bSignal
+		AND aSensors[3].bSignal,
+	PT:=T#2S
+);
+IF fbTimer.Q
 THEN
 	bAllPartsPresent := TRUE;
 ELSE
@@ -23,8 +31,11 @@ ELSE
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="PresenceDetector">
-      <LineId Id="14" Count="0" />
-      <LineId Id="17" Count="6" />
+      <LineId Id="34" Count="3" />
+      <LineId Id="40" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="18" Count="5" />
     </LineIds>
   </POU>
 </TcPlcObject>
