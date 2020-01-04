@@ -2,8 +2,9 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="SC_BeltConveyors" Id="{eb206bc1-d4a6-42f3-9c9e-531ede3780e1}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK SC_BeltConveyors EXTENDS FB_Chain
-VAR_IN_OUT
-	ioPalletizer : SM_Palletizer;
+VAR_INPUT
+	bExecute : BOOL;
+	bAllPartsPresent : BOOL;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -40,13 +41,48 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[fbStepWorkerBusy();
+
 CASE fbStepWorkerBusy.uiStep OF
 
 	eBusySCStart: 
-	
-		iStepCondition := ioPalletizer.getDoneCycle;
-		iStepCondition.setValue := FALSE;
+		THIS^.aBeltConveyors[eBeltConveyorEntrance].On();
 		
+		fbStepWorkerBusy.mNextStep(10);
+		
+	10:
+		//As Soon as the first package reaches the counter sensor
+		//the second floor of the palletizer is informed
+		//consequently the second floor of the palletizer will go in busy mode.
+		IF uiPackageCounter = 1
+		THEN
+			THIS^.aBeltConveyors[eBeltConveyorUpwards].On();
+			rChainController.releaseForChain('scSecondFloor', THIS^);		
+			fbStepWorkerBusy.mNextStep(15);
+		END_IF
+		
+	15:
+		IF uiPackageCounter = 3
+		THEN
+			uiPackageCounter := 0;
+			fbStepWorkerBusy.mNextStep(20);
+		END_IF
+	20:
+		fbStepWorkerBusy
+				.mSetTimer(T#1s)
+				.mNextStep(30);
+	30:
+		THIS^.aBeltConveyors[eBeltConveyorEntrance].Off();
+		IF bAllPartsPresent
+		THEN
+			THIS^.aBeltConveyors[eBeltConveyorUpwards].Off();
+			Done();
+			fbStepWorkerBusy.mNextStep(0);
+		END_IF
+		
+	40:
+	
+		
+		(*
 		//At start we check how many packages have passed the fbCounterSensor
 		IF uiPackageCounter < 3
 		THEN
@@ -105,10 +141,9 @@ CASE fbStepWorkerBusy.uiStep OF
 	
 		fbStepWorkerBusy.mNextStep(eBusySCStart);
 		Fault();	
-			
+		*)	
 END_CASE
-		
-		]]></ST>
+	]]></ST>
       </Implementation>
     </Method>
     <Method Name="Error" Id="{60b47e3f-b483-4a78-9b11-181870d715af}">
@@ -161,7 +196,29 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[fbStepWorkerReady();
+CASE fbStepWorkerReady.uiStep OF
+	
+	0: 
+	
+		IF bExecute THEN
+			fbStepWorkerReady.mNextStep(10);
+		END_IF
+		
+	10:
+	
+		IF rChainController
+			.releaseCheck(THIS^)
+			.releaseFromChain(sChainReleasing := 'scSecondFloor', THIS^)
+			.releaseResult(THIS^) 
+		THEN
+			Execute();
+			fbStepWorkerReady.mNextStep(0);
+		END_IF
+	
+		
+	
+END_CASE]]></ST>
       </Implementation>
     </Method>
     <Method Name="Waiting" Id="{d4b9dfaa-bf2c-4231-a754-ca38612c22a8}">
@@ -187,9 +244,35 @@ END_VAR
     </LineIds>
     <LineIds Name="SC_BeltConveyors.Busy">
       <LineId Id="142" Count="0" />
-      <LineId Id="68" Count="3" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="68" Count="2" />
       <LineId Id="128" Count="0" />
-      <LineId Id="131" Count="1" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="158" Count="1" />
+      <LineId Id="193" Count="1" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="186" Count="1" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="189" Count="1" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="168" Count="1" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="170" Count="3" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="178" Count="3" />
+      <LineId Id="132" Count="0" />
       <LineId Id="72" Count="8" />
       <LineId Id="149" Count="0" />
       <LineId Id="81" Count="1" />
@@ -213,7 +296,6 @@ END_VAR
       <LineId Id="113" Count="4" />
       <LineId Id="119" Count="0" />
       <LineId Id="39" Count="0" />
-      <LineId Id="38" Count="0" />
     </LineIds>
     <LineIds Name="SC_BeltConveyors.Error">
       <LineId Id="20" Count="1" />
@@ -232,7 +314,16 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SC_BeltConveyors.Ready">
+      <LineId Id="27" Count="8" />
       <LineId Id="23" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="42" Count="3" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="36" Count="1" />
     </LineIds>
     <LineIds Name="SC_BeltConveyors.Waiting">
       <LineId Id="5" Count="0" />

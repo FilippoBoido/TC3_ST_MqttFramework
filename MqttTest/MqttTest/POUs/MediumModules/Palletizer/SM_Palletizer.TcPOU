@@ -2,7 +2,8 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="SM_Palletizer" Id="{73a1f3d2-201c-42a5-94a2-081d42f8b358}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK SM_Palletizer EXTENDS StateMachine
-VAR_INPUT
+VAR_IN_OUT
+	ioChainController : FB_ChainController;
 END_VAR
 VAR_OUTPUT
 	
@@ -10,32 +11,30 @@ VAR_OUTPUT
 	
 END_VAR
 VAR
-	fbPallBeltConveyor : PalletizerConveyor;
-	fbPallChainConveyor : PalletizerConveyor;
-	fbPallElevator : PalletizerElevator;
-	fbPushCyl : Cylinder;
-	fbTurnCyl : Cylinder;
-	fbPlateCyl : Cylinder;
-	fbClampCyl : Cylinder;
-	fbClampedSen : Sensor;
-	fbPlateLimitSen : Sensor;
-	fbPusherLimitSen : Sensor;
-	fbPresenceDetector : PresenceDetector;
+
 	fbDoneCycle : BoolOut;
 	fbStepWorkerBusy : FB_StepWorker;
+	
+	scFirstFloor : SC_FirstFloor :=
+	(
+		sChainName := 'scFirstFloor',
+		rChainController := ioChainController
+	);
+	
+	scSecondFloor : SC_SecondFloor :=
+	(
+		sChainName := 'scSecondFloor',
+		rChainController := ioChainController
+	);
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[SUPER^();
+scFirstFloor();
+scSecondFloor();
 
-fbPallBeltConveyor();
-fbPallChainConveyor();
-fbPushCyl();
-fbTurnCyl();
-fbPlateCyl();
-fbClampCyl();
-
-fbPresenceDetector(bAllPartsPresent => bAllPartsPresent);]]></ST>
+bAllPartsPresent := scSecondFloor.bAllPartsPresent;
+scSecondFloor.bPlateOpen := scFirstFloor.bPlateOpen;]]></ST>
     </Implementation>
     <Method Name="Busy" Id="{d9e0814b-09a9-4c14-8872-e9e8a213db38}">
       <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
@@ -43,83 +42,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[fbStepWorkerBusy();
-
-CASE fbStepWorkerBusy.uiStep OF
-
-	ePALStart:
-	
-		fbStepWorkerBusy.mNextStep(ePALActivateTurn);
-		
-	ePALActivateTurn:
-	
-		fbTurnCyl.Extend();
-		fbStepWorkerBusy.mNextStep(ePALActivateBeltForw);
-		
-	ePALActivateBeltForw:
-	
-		fbPallBeltConveyor.On();
-		fbStepWorkerBusy.mNextStep(ePALWaitForPackages);
-		
-	ePALWaitForPackages:
-	
-		IF fbPresenceDetector.bAllPartsPresent
-		THEN
-			bAllPartsPresent := TRUE;
-			fbPallBeltConveyor.Off();
-			fbStepWorkerBusy.mNextStep(ePALPushPackages);
-		END_IF
-		
-	ePALPushPackages:
-	
-		fbPushCyl.Extend();
-		
-		fbStepWorkerBusy
-			.mSetTimer(T#2S)
-			.mNextStep(ePALRetractPusher);
-		
-	ePALRetractPusher:
-	
-		fbPushCyl.Retract();
-		
-		fbStepWorkerBusy
-			.mSetTimer(T#2S)
-			.mNextStep(ePALClamp);
-			
-	ePALClamp:
-	
-		fbClampCyl.Extend();
-		fbStepWorkerBusy
-			.mSetTimer(T#2S)
-			.mNextStep(ePALRetractClamper);
-			
-	ePALRetractClamper:
-	
-		fbClampCyl.Retract();
-		fbStepWorkerBusy
-			.mSetTimer(T#2S)
-			.mNextStep(ePALWaitForPallet);
-			
-	ePALWaitForPallet:
-		
-		fbDoneCycle.setValue := TRUE;
-		bAllPartsPresent := FALSE;
-		fbStepWorkerBusy.mNextStep(ePALStart);
-		Done();
-		
-	ePALOpenPlate:
-	
-	ePALClosePlate:
-	
-	ePALElevatorUp:
-	
-	ePALElevatorDown:
-	
-	ePALStartChains:
-	
-	ePALStopChains:
-	
-END_CASE]]></ST>
+        <ST><![CDATA[scFirstFloor(bExecute := TRUE);
+scSecondFloor(bExecute := TRUE);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Error" Id="{1e64e457-c3f7-4fa5-85b2-02fb48054177}">
@@ -157,7 +81,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Start();]]></ST>
+        <ST><![CDATA[ioChainController
+	.addChain(itfChain := scFirstFloor)
+	.addChain(itfChain := scSecondFloor);
+	
+Start();]]></ST>
       </Implementation>
     </Method>
     <Method Name="Prepare" Id="{ee19a450-41b7-476e-aa8a-75b7d82d8dde}">
@@ -190,77 +118,14 @@ END_VAR
     <LineIds Name="SM_Palletizer">
       <LineId Id="9" Count="0" />
       <LineId Id="21" Count="0" />
-      <LineId Id="20" Count="0" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="125" Count="0" />
       <LineId Id="51" Count="0" />
-      <LineId Id="22" Count="3" />
-      <LineId Id="75" Count="0" />
       <LineId Id="26" Count="0" />
     </LineIds>
     <LineIds Name="SM_Palletizer.Busy">
-      <LineId Id="80" Count="1" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="27" Count="1" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="37" Count="2" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="44" Count="1" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="46" Count="0" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="51" Count="0" />
-      <LineId Id="53" Count="3" />
-      <LineId Id="52" Count="0" />
-      <LineId Id="57" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="58" Count="1" />
-      <LineId Id="61" Count="1" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="72" Count="2" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="65" Count="0" />
-      <LineId Id="77" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="78" Count="1" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="68" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="69" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="70" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="71" Count="0" />
       <LineId Id="6" Count="0" />
+      <LineId Id="88" Count="0" />
     </LineIds>
     <LineIds Name="SM_Palletizer.Error">
       <LineId Id="5" Count="0" />
@@ -272,6 +137,7 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SM_Palletizer.Init">
+      <LineId Id="9" Count="3" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SM_Palletizer.Prepare">

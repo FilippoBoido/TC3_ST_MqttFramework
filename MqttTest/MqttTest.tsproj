@@ -16,47 +16,55 @@
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPallElevator.fbElevatorMoving.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorMoving.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPushCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPlateCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbTurnCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPlateLimitSen.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPlateCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbElevatorFrontLimit.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbClampCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbElevatorBackLimit.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbClampedSen.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbPushCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPlateLimitSen.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbTurnCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPusherLimitSen.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbClampCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPresenceDetector.aSensors[1].fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbClampedSen.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPresenceDetector.aSensors[2].fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbPusherLimitSen.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPresenceDetector.aSensors[3].fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbPresenceDetector.aSensors[1].fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbPresenceDetector.aSensors[2].fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbPresenceDetector.aSensors[3].fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -64,47 +72,63 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPallElevator.fbElevatorMoving.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].scPostPalletizer.fbPalletAvailable.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPushCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[1].scPrePalletizer.fbPalletAvailable.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbTurnCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorMoving.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPlateCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPlateCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbClampCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPlateLimitSen.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbClampedSen.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbElevatorFrontLimit.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPlateLimitSen.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbElevatorBackLimit.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPusherLimitSen.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbPushCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPresenceDetector.aSensors[1].fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbTurnCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPresenceDetector.aSensors[2].fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbClampCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPresenceDetector.aSensors[3].fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbClampedSen.fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbPusherLimitSen.fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbPresenceDetector.aSensors[1].fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbPresenceDetector.aSensors[2].fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbPresenceDetector.aSensors[3].fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -112,51 +136,75 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPallElevator.fbElevatorMoving.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].scPostPalletizer.fbPalletAvailable.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPushCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[2].scPrePalletizer.fbPalletAvailable.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbTurnCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorMoving.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPlateCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPlateCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbClampCyl.fbExtendedSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPlateLimitSen.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbClampedSen.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbElevatorFrontLimit.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPlateLimitSen.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbElevatorBackLimit.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPusherLimitSen.fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbPushCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPresenceDetector.aSensors[1].fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbTurnCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPresenceDetector.aSensors[2].fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbClampCyl.fbExtendedSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPresenceDetector.aSensors[3].fbSignal.bValue</Name>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbClampedSen.fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbPusherLimitSen.fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbPresenceDetector.aSensors[1].fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbPresenceDetector.aSensors[2].fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbPresenceDetector.aSensors[3].fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.aTransferLines[3].scBeltConveyors.fbCounterSensor.fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].scPostPalletizer.fbPalletAvailable.fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].scPrePalletizer.fbPalletAvailable.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
@@ -175,39 +223,59 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPallBeltConveyor.fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPallBeltConveyor.fbStartBackward.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPallChainConveyor.fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPallChainConveyor.fbStartBackward.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPushCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbTurnCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbPlateCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbClampCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.aTransferLines[1].fbPalletizer.fbDoneCycle.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbReleaseResult.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallChainConveyor.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallChainConveyor.fbStartBackward.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorUp.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorDown.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorToLimit.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPlateCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbReleaseResult.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbPallBeltConveyor.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbPallBeltConveyor.fbStartBackward.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbPushCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbTurnCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scSecondFloor.fbClampCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -227,7 +295,19 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.aTransferLines[1].scPostPalletizer.fbRollConveyor.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.aTransferLines[1].scPrePalletizer.fbReleaseResult.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].scPrePalletizer.fbRollConvEntrance.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].scPrePalletizer.fbRollConvPrePallet.fbStart.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -243,39 +323,59 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPallBeltConveyor.fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPallBeltConveyor.fbStartBackward.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPallChainConveyor.fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPallChainConveyor.fbStartBackward.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPushCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbTurnCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbPlateCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbClampCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.aTransferLines[2].fbPalletizer.fbDoneCycle.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbReleaseResult.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPallChainConveyor.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPallChainConveyor.fbStartBackward.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorUp.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorDown.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorToLimit.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPlateCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbReleaseResult.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbPallBeltConveyor.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbPallBeltConveyor.fbStartBackward.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbPushCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbTurnCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scSecondFloor.fbClampCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -295,7 +395,19 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.aTransferLines[2].scPostPalletizer.fbRollConveyor.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.aTransferLines[2].scPrePalletizer.fbReleaseResult.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].scPrePalletizer.fbRollConvEntrance.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].scPrePalletizer.fbRollConvPrePallet.fbStart.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -311,39 +423,59 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPallBeltConveyor.fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPallBeltConveyor.fbStartBackward.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPallChainConveyor.fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPallChainConveyor.fbStartBackward.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPushCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbTurnCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbPlateCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbClampCyl.fbExtend.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.aTransferLines[3].fbPalletizer.fbDoneCycle.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbReleaseResult.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallChainConveyor.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallChainConveyor.fbStartBackward.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorUp.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorDown.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorToLimit.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPlateCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbReleaseResult.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbPallBeltConveyor.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbPallBeltConveyor.fbStartBackward.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbPushCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbTurnCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbClampCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -363,7 +495,19 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.aTransferLines[3].scPostPalletizer.fbRollConveyor.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.aTransferLines[3].scPrePalletizer.fbReleaseResult.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].scPrePalletizer.fbRollConvEntrance.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].scPrePalletizer.fbRollConvPrePallet.fbStart.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>

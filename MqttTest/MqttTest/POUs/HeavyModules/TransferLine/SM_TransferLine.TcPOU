@@ -9,48 +9,45 @@ END_VAR
 VAR
 	
 	aRollerConveyors : ARRAY[1..3] OF RollerConveyor;
-	
+	fbChainController : FB_ChainController;
 	
 	fbPalletizer : SM_Palletizer;
 	fbStepWorkerReady : FB_StepWorker;
 	fbStepWorkerBusy : FB_StepWorker;
-	
-	fbChainController : FB_ChainController;
-	
+
 	scBeltConveyors : 
 		SC_BeltConveyors := 
 		(
-			init_uiChainNumber := 1, 
-			init_sChainName  := 'scBeltConveyors',
-			init_rChainController := fbChainController
+			sChainName  := 'scBeltConveyors',
+			rChainController := fbChainController
 		);
 		
 	scPostPalletizer : 
 		SC_PostPalletizer := 
 		(
-			init_uiChainNumber := 2, 
-			init_sChainName  := 'scPostPalletizer',
-			init_rChainController := fbChainController
+			sChainName  := 'scPostPalletizer',
+			rChainController := fbChainController
 		);
 		
 	scPrePalletizer : 
 		SC_PrePalletizer := 
 		(
-			init_uiChainNumber := 3, 
-			init_sChainName  := 'scPrePalletizer',
-			init_rChainController := fbChainController
+			sChainName  := 'scPrePalletizer',
+			rChainController := fbChainController
 		);
  
-	
 	uiPackageCounter : UINT;
 	i : UINT;
 	bPackageOnTheWay : BOOL;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[SUPER^();
-fbPalletizer();
-scBeltConveyors(ioPalletizer := fbPalletizer);
+fbPalletizer(ioChainController := fbChainController);
+scBeltConveyors(bAllPartsPresent := fbPalletizer.bAllPartsPresent);
+scPrePalletizer();
+scPostPalletizer();
 
 ]]></ST>
     </Implementation>
@@ -62,7 +59,9 @@ END_VAR
       <Implementation>
         <ST><![CDATA[CASE fbStepWorkerBusy.uiStep OF
 	eTlStartUnits:
-		scBeltConveyors.Execute();
+		scBeltConveyors.bExecute := TRUE;
+		scPrePalletizer.bExecute := TRUE;
+		scPostPalletizer.bExecute := TRUE;
 		fbStepWorkerBusy.mNextStep(eTlCheckUnits);
 	eTlCheckUnits:
 		IF scBeltConveyors.eStateMachine = E_StateMachine.eError
@@ -98,7 +97,13 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Start();]]></ST>
+        <ST><![CDATA[fbChainController
+	.addChain(itfChain := scBeltConveyors)
+	.addChain(itfChain := scPostPalletizer)
+	.addChain(itfChain := scPrePalletizer);
+	
+	
+Start();]]></ST>
       </Implementation>
     </Method>
     <Method Name="Prepare" Id="{702c85df-2da8-4392-a504-15b946826c27}">
@@ -132,13 +137,16 @@ END_VAR
       <LineId Id="37" Count="0" />
       <LineId Id="127" Count="0" />
       <LineId Id="38" Count="0" />
+      <LineId Id="173" Count="1" />
       <LineId Id="50" Count="0" />
       <LineId Id="31" Count="0" />
     </LineIds>
     <LineIds Name="SM_TransferLine.Busy">
       <LineId Id="38" Count="0" />
       <LineId Id="69" Count="0" />
-      <LineId Id="73" Count="4" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="85" Count="1" />
+      <LineId Id="74" Count="3" />
       <LineId Id="79" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="80" Count="1" />
@@ -151,6 +159,7 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SM_TransferLine.Init">
+      <LineId Id="9" Count="5" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SM_TransferLine.Prepare">
