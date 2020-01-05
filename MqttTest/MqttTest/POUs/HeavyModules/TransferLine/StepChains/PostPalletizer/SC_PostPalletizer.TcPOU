@@ -38,6 +38,7 @@ CASE fbStepWorkerBusy.uiStep OF
 	10:
 		IF THIS^.fbPalletAvailable.bSignal
 		THEN
+			THIS^.fbRollConveyor.Off();
 			fbStepWorkerBusy.mNextStep(20);
 		END_IF
 	
@@ -132,6 +133,7 @@ END_VAR
       <LineId Id="43" Count="2" />
       <LineId Id="38" Count="0" />
       <LineId Id="47" Count="6" />
+      <LineId Id="62" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="54" Count="0" />
       <LineId Id="56" Count="2" />

@@ -2,6 +2,11 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="SM_Palletizer" Id="{73a1f3d2-201c-42a5-94a2-081d42f8b358}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK SM_Palletizer EXTENDS StateMachine
+VAR_INPUT
+	bExecute : BOOL;
+	scFirstFloor : SC_FirstFloor;	
+	scSecondFloor : SC_SecondFloor;
+END_VAR
 VAR_IN_OUT
 	ioChainController : FB_ChainController;
 END_VAR
@@ -15,23 +20,13 @@ VAR
 	fbDoneCycle : BoolOut;
 	fbStepWorkerBusy : FB_StepWorker;
 	
-	scFirstFloor : SC_FirstFloor :=
-	(
-		sChainName := 'scFirstFloor',
-		rChainController := ioChainController
-	);
 	
-	scSecondFloor : SC_SecondFloor :=
-	(
-		sChainName := 'scSecondFloor',
-		rChainController := ioChainController
-	);
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[SUPER^();
-scFirstFloor();
-scSecondFloor();
+scFirstFloor(bExecute := bExecute);
+scSecondFloor(bExecute := bExecute);
 
 bAllPartsPresent := scSecondFloor.bAllPartsPresent;
 scSecondFloor.bPlateOpen := scFirstFloor.bPlateOpen;]]></ST>
@@ -72,7 +67,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[Start();]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{d70eb0e0-8e12-4f46-8c48-9d942d266afa}">
@@ -85,6 +80,14 @@ END_VAR
 	.addChain(itfChain := scFirstFloor)
 	.addChain(itfChain := scSecondFloor);
 	
+scFirstFloor(
+	sChainName := 'scFirstFloor',
+	rChainController := ioChainController
+);
+scSecondFloor(
+	sChainName := 'scSecondFloor',
+	rChainController := ioChainController
+);
 Start();]]></ST>
       </Implementation>
     </Method>
@@ -138,6 +141,12 @@ END_VAR
     </LineIds>
     <LineIds Name="SM_Palletizer.Init">
       <LineId Id="9" Count="3" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="21" Count="2" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SM_Palletizer.Prepare">

@@ -44,14 +44,21 @@ CASE fbStepWorkerBusy.uiStep OF
 	eSecondFloorStart: //send release to scBeltConveyor
 	
 		iCycle := iCycle + 1;
-		rChainController.releaseForChain('scBeltConveyor', THIS^);
-		fbStepWorkerBusy.mNextStep(10);
+		IF iCycle = 2
+		THEN
+			rChainController.releaseForChain('scBeltConveyors', THIS^);
+			fbStepWorkerBusy.mNextStep(10);
+		ELSE
+			fbStepWorkerBusy.mNextStep(20);
+		END_IF
+		
+		
 		
 	10: //wait for release from scBeltConveyor to start actuators
 	
 		IF rChainController
 			.releaseCheck(THIS^)
-			.releaseFromChain(sChainReleasing := 'scBeltConveyor', THIS^)
+			.releaseFromChain(sChainReleasing := 'scBeltConveyors', THIS^)
 			.releaseResult(THIS^) 
 		THEN
 			fbStepWorkerBusy.mNextStep(20);
@@ -100,7 +107,7 @@ CASE fbStepWorkerBusy.uiStep OF
 		THEN
 			fbStepWorkerBusy
 				.mSetTimer(T#2S)
-				.mNextStep(eSecondFloorDone);
+				.mNextStep(eSecondFloorStart);
 		ELSE
 			iCycle := 0;
 			fbStepWorkerBusy.mNextStep(eSyncWithFirstFloor);
@@ -186,7 +193,7 @@ CASE fbStepWorkerReady.uiStep OF
 		IF NOT fbPresenceDetector.bAllPartsPresent
 			AND NOT bPlateOpen
 		THEN
-			rChainController.releaseForChain('scBeltConveyor', THIS^);	
+			rChainController.releaseForChain('scBeltConveyors', THIS^);	
 			fbStepWorkerReady.mNextStep(20);	
 		END_IF
 	
@@ -194,10 +201,10 @@ CASE fbStepWorkerReady.uiStep OF
 		
 		IF rChainController
 			.releaseCheck(THIS^)
-			.releaseFromChain(sChainReleasing := 'scBeltConveyor', THIS^)
+			.releaseFromChain(sChainReleasing := 'scBeltConveyors', THIS^)
 			.releaseResult(THIS^) 
 		THEN
-			fbStepWorkerBusy.mNextStep(0);
+			fbStepWorkerReady.mNextStep(0);
 			Execute();
 		END_IF
 		
@@ -226,6 +233,10 @@ END_VAR
       <LineId Id="144" Count="0" />
       <LineId Id="146" Count="0" />
       <LineId Id="214" Count="0" />
+      <LineId Id="236" Count="1" />
+      <LineId Id="241" Count="1" />
+      <LineId Id="239" Count="1" />
+      <LineId Id="238" Count="0" />
       <LineId Id="147" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="161" Count="0" />

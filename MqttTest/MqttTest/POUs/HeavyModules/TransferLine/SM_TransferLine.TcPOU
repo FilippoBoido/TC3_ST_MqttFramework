@@ -47,6 +47,8 @@ END_VAR
 fbPalletizer(ioChainController := fbChainController);
 scBeltConveyors(bAllPartsPresent := fbPalletizer.bAllPartsPresent);
 scPrePalletizer();
+scPrePalletizer.bPalletizerRequest := fbPalletizer.scFirstFloor.bPalletizerRequest;
+fbPalletizer.scFirstFloor.bIncomingPallet := scPrePalletizer.bSentToPalletizer;
 scPostPalletizer();
 
 ]]></ST>
@@ -62,6 +64,7 @@ END_VAR
 		scBeltConveyors.bExecute := TRUE;
 		scPrePalletizer.bExecute := TRUE;
 		scPostPalletizer.bExecute := TRUE;
+		fbPalletizer.bExecute := TRUE;
 		fbStepWorkerBusy.mNextStep(eTlCheckUnits);
 	eTlCheckUnits:
 		IF scBeltConveyors.eStateMachine = E_StateMachine.eError
@@ -88,7 +91,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[Start();]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{4357aa31-540d-408d-bbfa-5ee1874096be}">
@@ -137,7 +140,9 @@ END_VAR
       <LineId Id="37" Count="0" />
       <LineId Id="127" Count="0" />
       <LineId Id="38" Count="0" />
-      <LineId Id="173" Count="1" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="215" Count="1" />
+      <LineId Id="174" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="31" Count="0" />
     </LineIds>
@@ -146,6 +151,7 @@ END_VAR
       <LineId Id="69" Count="0" />
       <LineId Id="73" Count="0" />
       <LineId Id="85" Count="1" />
+      <LineId Id="90" Count="0" />
       <LineId Id="74" Count="3" />
       <LineId Id="79" Count="0" />
       <LineId Id="78" Count="0" />

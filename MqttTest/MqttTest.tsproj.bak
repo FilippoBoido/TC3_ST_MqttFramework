@@ -239,6 +239,18 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorUp.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorDown.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorToLimit.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPlateCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -327,6 +339,18 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorUp.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorDown.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorToLimit.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.aTransferLines[2].fbPalletizer.scFirstFloor.fbPlateCyl.fbExtend.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -412,6 +436,18 @@
 						</Var>
 						<Var>
 							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallChainConveyor.fbStartBackward.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorUp.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorDown.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorToLimit.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>

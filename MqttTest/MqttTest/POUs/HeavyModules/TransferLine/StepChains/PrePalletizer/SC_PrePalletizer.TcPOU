@@ -18,6 +18,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[SUPER^();
+fbPalletAvailable();
 bPalletAvailable := fbPalletAvailable.bSignal;
 ]]></ST>
     </Implementation>
@@ -36,7 +37,7 @@ CASE fbStepWorkerBusy.uiStep OF
 		IF NOT bPalletAvailable
 		THEN
 			bSentToPalletizer := TRUE;
-			fbStepWorkerReady.mNextStep(10);
+			fbStepWorkerBusy.mNextStep(10);
 		END_IF
 
 	10:
@@ -45,7 +46,7 @@ CASE fbStepWorkerBusy.uiStep OF
 		
 			bSentToPalletizer := FALSE;
 			fbRollConvPrePallet.Off();
-			fbStepWorkerReady.mNextStep(0);
+			fbStepWorkerBusy.mNextStep(0);
 			
 			Done();
 			
@@ -140,6 +141,7 @@ END_VAR
     </Method>
     <LineIds Name="SC_PrePalletizer">
       <LineId Id="9" Count="0" />
+      <LineId Id="39" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>

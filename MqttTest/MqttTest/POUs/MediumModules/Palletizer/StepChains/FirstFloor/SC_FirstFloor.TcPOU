@@ -71,54 +71,38 @@ CASE fbStepWorkerBusy.uiStep OF
 	
 		IF NOT fbPallElevator.isMoving
 		THEN
-			fbStepWorkerBusy.mNextStep(40);
+			fbStepWorkerBusy
+				.mSetTimer(tTime := T#2S)
+				.mNextStep(40);
 		END_IF
 		
 	40:
 	
 		fbPlateCyl.Extend();
 		fbStepWorkerBusy
-			.mSetTimer(T#1S)
+			.mSetTimer(T#2S)
+			.mNextStep(45);
+	
+	45:	
+		rChainController.releaseForChain('scSecondFloor', THIS^);	
+		fbPallElevator.MoveDown();		
+		fbStepWorkerBusy
+			.mSetTimer(T#2S)
 			.mNextStep(50);
-			
 	50:
 	
-		//Plate is open
-		IF fbPlateLimitSen.bSignal
-		THEN
-			fbStepWorkerBusy
-				.mSetTimer(T#1S)
-				.mNextStep(60);
-		END_IF
-		
-	60:
-		fbPlateCyl.Retract();
-		fbStepWorkerBusy
-			.mSetTimer(T#1S)
-			.mNextStep(70);
-			
-	70:
-	
-		//Plate is closed
-		IF fbPlateLimitSen.bSignal
-		THEN
-			fbStepWorkerBusy.mNextStep(80);
-		END_IF
-		
-	80:
-	
-		rChainController.releaseForChain('scSecondFloor', THIS^);	
-		fbPallElevator.MoveDown();
-		fbStepWorkerBusy.mNextStep(90);
-		
-	90:
-
 		IF NOT fbPallElevator.isMoving
 		THEN
 			rChainController.releaseForChain('scPostPalletizer', THIS^);
-			fbStepWorkerBusy.mNextStep(100);
-		END_IF	
+			fbStepWorkerBusy.mNextStep(60);
+		END_IF
+	
 		
+	60:
+	
+		fbPlateCyl.Retract();
+		fbStepWorkerBusy.mNextStep(100);
+	
 	100:
 	
 		IF rChainController
@@ -128,19 +112,23 @@ CASE fbStepWorkerBusy.uiStep OF
 		THEN
 
 			fbPallChainConveyor.On();
-			fbStepWorkerReady.mNextStep(110);
+			fbStepWorkerBusy.mNextStep(105);
+			
 		END_IF
-		
-	110:
-	
-		
+
+	105:
+		fbStepWorkerBusy
+				.mSetTimer(T#2s)
+				.mNextStep(110);
+	110:		
 		
 		IF NOT fbElevatorBackLimit.bSignal
 			AND NOT fbElevatorFrontLimit.bSignal
 		THEN
 		
 			Done();
-			fbStepWorkerReady.mNextStep(0);
+			fbPallChainConveyor.Off();
+			fbStepWorkerBusy.mNextStep(0);
 		END_IF
 
 END_CASE]]></ST>
@@ -247,48 +235,50 @@ END_VAR
       <LineId Id="84" Count="7" />
       <LineId Id="93" Count="1" />
       <LineId Id="96" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="174" Count="0" />
       <LineId Id="95" Count="0" />
       <LineId Id="92" Count="0" />
       <LineId Id="97" Count="2" />
       <LineId Id="101" Count="1" />
       <LineId Id="100" Count="0" />
-      <LineId Id="103" Count="2" />
-      <LineId Id="114" Count="0" />
-      <LineId Id="106" Count="1" />
-      <LineId Id="109" Count="0" />
-      <LineId Id="116" Count="0" />
-      <LineId Id="115" Count="0" />
-      <LineId Id="108" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="179" Count="0" />
+      <LineId Id="181" Count="1" />
+      <LineId Id="180" Count="0" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="183" Count="1" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="188" Count="0" />
       <LineId Id="110" Count="1" />
-      <LineId Id="117" Count="2" />
+      <LineId Id="189" Count="0" />
+      <LineId Id="117" Count="0" />
       <LineId Id="112" Count="0" />
-      <LineId Id="120" Count="2" />
-      <LineId Id="124" Count="3" />
-      <LineId Id="123" Count="0" />
-      <LineId Id="128" Count="2" />
-      <LineId Id="113" Count="0" />
-      <LineId Id="132" Count="0" />
-      <LineId Id="134" Count="0" />
-      <LineId Id="133" Count="0" />
-      <LineId Id="131" Count="0" />
-      <LineId Id="136" Count="2" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="139" Count="0" />
-      <LineId Id="135" Count="0" />
       <LineId Id="140" Count="1" />
       <LineId Id="170" Count="0" />
       <LineId Id="166" Count="3" />
       <LineId Id="142" Count="0" />
       <LineId Id="145" Count="0" />
       <LineId Id="161" Count="0" />
-      <LineId Id="146" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="192" Count="0" />
       <LineId Id="143" Count="0" />
-      <LineId Id="148" Count="2" />
-      <LineId Id="152" Count="2" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="197" Count="1" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="153" Count="1" />
       <LineId Id="159" Count="0" />
       <LineId Id="155" Count="0" />
       <LineId Id="163" Count="0" />
       <LineId Id="165" Count="0" />
+      <LineId Id="191" Count="0" />
       <LineId Id="157" Count="1" />
       <LineId Id="151" Count="0" />
       <LineId Id="38" Count="0" />

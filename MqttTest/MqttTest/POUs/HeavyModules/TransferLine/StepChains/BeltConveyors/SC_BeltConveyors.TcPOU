@@ -56,7 +56,7 @@ CASE fbStepWorkerBusy.uiStep OF
 		IF uiPackageCounter = 1
 		THEN
 			THIS^.aBeltConveyors[eBeltConveyorUpwards].On();
-			rChainController.releaseForChain('scSecondFloor', THIS^);		
+			
 			fbStepWorkerBusy.mNextStep(15);
 		END_IF
 		
@@ -213,6 +213,7 @@ CASE fbStepWorkerReady.uiStep OF
 			.releaseResult(THIS^) 
 		THEN
 			Execute();
+			rChainController.releaseForChain('scSecondFloor', THIS^);		
 			fbStepWorkerReady.mNextStep(0);
 		END_IF
 	
@@ -320,6 +321,7 @@ END_VAR
       <LineId Id="42" Count="3" />
       <LineId Id="41" Count="0" />
       <LineId Id="46" Count="0" />
+      <LineId Id="52" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="38" Count="1" />
