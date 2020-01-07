@@ -18,7 +18,7 @@
     <Company>FactoryAutomation</Company>
     <Released>false</Released>
     <Title>MqttTest</Title>
-    <ProjectVersion>1.3.2.7</ProjectVersion>
+    <ProjectVersion>1.4.2.8</ProjectVersion>
     <Author>Filippo Boido</Author>
   </PropertyGroup>
   <ItemGroup>

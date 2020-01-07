@@ -4,6 +4,7 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
  aTransferLines  : ARRAY[1..3] OF SM_TransferLine;
+ fbLineRegulator : SM_LineRegulator;
  fbSymbolPathStorage : SymbolPathStorage;
  fbMainStepWorker : FB_StepWorker;
 END_VAR
@@ -12,6 +13,7 @@ END_VAR
       <ST><![CDATA[aTransferLines[1]();
 aTransferLines[2]();
 aTransferLines[3]();
+fbLineRegulator();
 
 CASE fbMainStepWorker.uiStep OF
 	
@@ -40,6 +42,7 @@ END_CASE]]></ST>
       <LineId Id="10" Count="0" />
       <LineId Id="12" Count="1" />
       <LineId Id="15" Count="0" />
+      <LineId Id="45" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="0" />

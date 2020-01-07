@@ -37,6 +37,10 @@ Further implementation of the TransferLine StepChains.
 1.3.2.7:	Boido	050120
 
 Further implementation of the TransferLine StepChains.
+
+1.4.2.8:	Boido 070120
+
+Implementation of the SM_LineRegulator
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
@@ -52,6 +56,10 @@ Further implementation of the TransferLine StepChains.
       <LineId Id="34" Count="0" />
       <LineId Id="37" Count="2" />
       <LineId Id="36" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="45" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>
   </POU>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="SM_LineRegulator" Id="{ca3d4937-9986-4e8e-b7ee-5deb908a267b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK SM_LineRegulator EXTENDS StateMachine
 VAR_INPUT
@@ -8,11 +8,24 @@ VAR_OUTPUT
 END_VAR
 VAR
 	fbTurntable : Turntable;
+
 	aRollerConveyors : ARRAY[1..3] OF RollerConveyor;
+	fbReadyStepWorker : FB_StepWorker;
+	fbBusyStepWorker : FB_StepWorker;
+	fbInitStepWorker : FB_StepWorker;
+	
+	messageIndex : UINT;
+	stMqttPayload : ST_MqttPayload;
+	aSubscriptions : ARRAY[1..3] OF STRING;
+	uiSubscriptionsCycler : UINT := 1;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Super^();]]></ST>
+      <ST><![CDATA[SUPER^();
+fbTurntable();
+aRollerConveyors[1]();
+aRollerConveyors[3]();
+]]></ST>
     </Implementation>
     <Method Name="Busy" Id="{5f49f79a-dd7d-411c-abbd-7df000596daa}">
       <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
@@ -20,7 +33,74 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
+        <ST><![CDATA[fbBusyStepWorker();
+CASE fbBusyStepWorker.uiStep OF
+
+	0:
+		aRollerConveyors[uiSubscriptionsCycler].On();
+		CASE uiSubscriptionsCycler OF
+		
+			1:
+				fbTurntable.RollPlus();
+				fbTurntable.Turn();
+			
+			2:
+				fbTurntable.RollPlus();
+			
+			3:
+				fbTurntable.RollMinus();
+				fbTurntable.Turn();
+		END_CASE
+		
+		fbBusyStepWorker
+			.mAddCondition(itfStepCondition := fbTurntable.fbBackLimit.getSignal)
+			.mAddCondition(itfStepCondition := fbTurntable.fbFrontLimit.getSignal)
+			.mNextStep(10);
+	10:
+	
+		aRollerConveyors[uiSubscriptionsCycler].Off();
+		CASE uiSubscriptionsCycler OF
+		
+			1:
+				fbTurntable.StopRolling();			
+				fbTurntable.UnTurn();
+				fbBusyStepWorker
+					.mSetTimer(T#2S)
+					.mNextStep(20);
+			
+			2:
+				fbBusyStepWorker.mNextStep(30);
+			
+			3:
+				fbTurntable.StopRolling();
+				fbTurntable.UnTurn();
+				fbBusyStepWorker
+					.mSetTimer(T#2S)
+					.mNextStep(20);
+		END_CASE
+		
+	20:
+		fbTurntable.RollPlus();
+		fbBusyStepWorker
+			.mSetTimer(T#2S)
+			.mNextStep(30);
+	30:	
+	
+		IF NOT fbTurntable.fbBackLimit.bSignal
+			AND NOT fbTurntable.fbFrontLimit.bSignal
+		THEN
+			fbBusyStepWorker
+				.mSetTimer(T#2S)
+				.mNextStep(40);
+		END_IF
+		
+	40:
+	
+		fbBusyStepWorker.mNextStep(0);
+		Done();
+		
+	
+END_CASE
 		]]></ST>
       </Implementation>
     </Method>
@@ -48,7 +128,38 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Start();]]></ST>
+        <ST><![CDATA[fbInitStepWorker();
+CASE fbInitStepWorker.uiStep OF
+
+	0: 
+		IF ADS.fbAdsConnector.isConnected
+		THEN
+			fbInitStepWorker.mNextStep(10);
+		END_IF
+	10:
+	
+		IF ADS.fbMqttClient.Subscribe('TL1_Synch')
+		THEN			
+			fbInitStepWorker.mNextStep(20);
+		END_IF
+		
+	20:
+	
+		IF ADS.fbMqttClient.Subscribe('TL2_Synch')
+		THEN			
+			fbInitStepWorker.mNextStep(30);
+		END_IF
+		
+	30:
+		
+		IF ADS.fbMqttClient.Subscribe('TL3_Synch')
+		THEN			
+			Start();
+		END_IF		
+		
+END_CASE
+
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Prepare" Id="{6b592004-8cf2-4348-b3e7-517e0f77b060}">
@@ -64,9 +175,44 @@ END_VAR
       <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
 VAR_INPUT
 END_VAR
+VAR
+	
+END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[fbReadyStepWorker();
+
+IF uiSubscriptionsCycler = 3
+THEN
+	uiSubscriptionsCycler := 1;
+ELSE
+	uiSubscriptionsCycler := uiSubscriptionsCycler + 1;
+END_IF
+
+CASE fbReadyStepWorker.uiStep OF
+
+	0: 
+		IF NOT fbTurntable.bBackLimit
+			AND NOT fbTurntable.bFrontLimit
+		THEN
+			fbReadyStepWorker.mNextStep(10);
+		END_IF
+		
+	10:
+	
+		messageIndex := ADS.fbMqttClient.isNewMessage(aSubscriptions[uiSubscriptionsCycler]);
+		IF messageIndex > 0
+		THEN
+			stMqttPayload := Ads.fbMqttClient.getNewMessage(messageIndex);
+			fbReadyStepWorker.mNextStep(20);
+		END_IF
+		
+	20:	
+		Ads.fbMqttClient.Publish(aSubscriptions[uiSubscriptionsCycler],stMqttPayload);
+		fbReadyStepWorker.mNextStep(0);
+		Execute();
+		
+END_CASE]]></ST>
       </Implementation>
     </Method>
     <Method Name="Waiting" Id="{d736384e-810f-4ff5-9820-b539fdf97b0f}">
@@ -80,9 +226,59 @@ END_VAR
     </Method>
     <LineIds Name="SM_LineRegulator">
       <LineId Id="9" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="25" Count="1" />
     </LineIds>
     <LineIds Name="SM_LineRegulator.Busy">
+      <LineId Id="45" Count="0" />
       <LineId Id="39" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="57" Count="2" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="71" Count="4" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="76" Count="4" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="92" Count="1" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="99" Count="1" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="104" Count="1" />
+      <LineId Id="108" Count="1" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="112" Count="1" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="43" Count="0" />
       <LineId Id="38" Count="0" />
     </LineIds>
     <LineIds Name="SM_LineRegulator.Error">
@@ -92,13 +288,34 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SM_LineRegulator.Init">
+      <LineId Id="11" Count="27" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="9" Count="1" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SM_LineRegulator.Prepare">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SM_LineRegulator.Ready">
-      <LineId Id="23" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="103" Count="4" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="93" Count="3" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="80" Count="4" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="98" Count="3" />
+      <LineId Id="28" Count="0" />
     </LineIds>
     <LineIds Name="SM_LineRegulator.Waiting">
       <LineId Id="5" Count="0" />

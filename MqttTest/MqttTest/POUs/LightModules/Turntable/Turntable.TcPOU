@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="Turntable" Id="{5a7b578a-85d4-41c6-b84c-ca292559fdbd}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Turntable
 VAR_INPUT
@@ -18,8 +18,8 @@ VAR_OUTPUT
 END_VAR
 VAR
 
-	fbFrontLimit : BoolIn;
-	fbBackLimit : BoolIn;
+	fbFrontLimit : Sensor;
+	fbBackLimit : Sensor;
 	
 	fbTurn : BoolOut;
 	fbRollPlus : BoolOut;
@@ -28,11 +28,14 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[bTurn := fbTurn.getValue;
+      <ST><![CDATA[fbFrontLimit();
+fbBackLimit();
+
+bTurn := fbTurn.getValue;
 bRollPlus := fbRollPlus.getValue;
 bRollMinus := fbRollMinus.getValue;
-bFrontLimit := fbFrontLimit.getValue;
-bBackLimit	:= fbBackLimit.getValue;]]></ST>
+bFrontLimit := fbFrontLimit.bSignal;
+bBackLimit	:= fbBackLimit.bSignal;]]></ST>
     </Implementation>
     <Method Name="RollMinus" Id="{207a62c8-6d7f-4007-bdf2-cf32530a58e7}">
       <Declaration><![CDATA[METHOD RollMinus : BOOL
@@ -83,6 +86,9 @@ END_VAR
       </Implementation>
     </Method>
     <LineIds Name="Turntable">
+      <LineId Id="65" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="66" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="36" Count="0" />
