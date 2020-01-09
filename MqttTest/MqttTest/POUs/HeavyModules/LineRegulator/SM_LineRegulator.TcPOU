@@ -132,10 +132,12 @@ END_VAR
 CASE fbInitStepWorker.uiStep OF
 
 	0: 
+	
 		IF ADS.fbAdsConnector.isConnected
 		THEN
 			fbInitStepWorker.mNextStep(10);
 		END_IF
+		
 	10:
 	
 		IF ADS.fbMqttClient.Subscribe('TL1_Synch')
@@ -288,7 +290,11 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SM_LineRegulator.Init">
-      <LineId Id="11" Count="27" />
+      <LineId Id="11" Count="3" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="15" Count="3" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="19" Count="19" />
       <LineId Id="44" Count="0" />
       <LineId Id="9" Count="1" />
       <LineId Id="5" Count="0" />

@@ -10,9 +10,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[aTransferLines[1]();
-aTransferLines[2]();
-aTransferLines[3]();
+      <ST><![CDATA[aTransferLines[1](sTLMqttName := 'TL1_Synch');
+aTransferLines[2](sTLMqttName := 'TL2_Synch');
+aTransferLines[3](sTLMqttName := 'TL3_Synch');
 fbLineRegulator();
 
 CASE fbMainStepWorker.uiStep OF

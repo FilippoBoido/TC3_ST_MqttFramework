@@ -2,7 +2,8 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="SM_TransferLine" Id="{2e7b366f-b9ef-4b13-bd70-7031bb32b800}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK SM_TransferLine EXTENDS StateMachine
-VAR_INPUT
+VAR_INPUT CONSTANT
+	sTLMqttName : STRING;
 END_VAR
 VAR_OUTPUT
 END_VAR

@@ -5,6 +5,7 @@
 VAR_INPUT
 	bExecute : BOOL;
 	bPalletizerDeliveryRequest : BOOL;
+	sTLMqttName : STRING;
 END_VAR
 VAR_OUTPUT
 	bGrantDeliveryPermission : BOOL;
@@ -25,7 +26,10 @@ fbRollConveyor();]]></ST>
       <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
 VAR_INPUT
 END_VAR
-]]></Declaration>
+VAR
+	stMqttPayload : ST_MqttPayload;
+	messageIndex : UINT;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[fbStepWorkerBusy();
 CASE fbStepWorkerBusy.uiStep OF
@@ -43,7 +47,35 @@ CASE fbStepWorkerBusy.uiStep OF
 		END_IF
 	
 	20: 
+		
 		//Mqtt exchange
+		IF Ads.fbMqttClient.Publish(sTLMqttName,stMqttPayload)
+		THEN
+			fbStepWorkerBusy.mNextStep(30);
+		END_IF
+	
+	30:
+	
+		messageIndex := ADS.fbMqttClient.isNewMessage(sTLMqttName);
+		IF messageIndex > 0
+		THEN
+			stMqttPayload := Ads.fbMqttClient.getNewMessage(messageIndex);
+			fbStepWorkerBusy.mNextStep(40);
+		END_IF
+		
+	40:
+	
+		THIS^.fbRollConveyor.On();
+		fbStepWorkerBusy
+			.mSetTimer(T#2S)
+			.mNextStep(50);
+			
+	50:
+		
+		THIS^.fbRollConveyor.Off();
+		Done();
+		fbStepWorkerBusy.mNextStep(0);
+		
 END_CASE]]></ST>
       </Implementation>
     </Method>
@@ -71,7 +103,10 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Start();]]></ST>
+        <ST><![CDATA[IF ADS.fbMqttClient.Subscribe(sTopic := sTLMqttName)
+THEN			
+	Start();
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Prepare" Id="{8ab7a1a5-fb9e-4cb0-aa6f-cc8da359eb79}">
@@ -136,7 +171,24 @@ END_VAR
       <LineId Id="62" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="54" Count="0" />
-      <LineId Id="56" Count="2" />
+      <LineId Id="56" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="71" Count="2" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="77" Count="4" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="85" Count="1" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="89" Count="2" />
+      <LineId Id="93" Count="1" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="95" Count="0" />
       <LineId Id="46" Count="0" />
     </LineIds>
     <LineIds Name="SC_PostPalletizer.Error">
@@ -146,7 +198,8 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="SC_PostPalletizer.Init">
-      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="2" />
+      <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="SC_PostPalletizer.Prepare">
       <LineId Id="5" Count="0" />
