@@ -16,6 +16,14 @@
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
+							<Name>MAIN.fbLineRegulator.fbTurntable.fbFrontLimit.fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbLineRegulator.fbTurntable.fbBackLimit.fbSignal.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.aTransferLines[1].fbPalletizer.scFirstFloor.fbPallElevator.fbElevatorMoving.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -211,6 +219,34 @@
 					<Vars VarGrpType="2">
 						<Name>PlcTask Outputs</Name>
 						<Var>
+							<Name>MAIN.fbLineRegulator.fbTurntable.fbTurn.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbLineRegulator.fbTurntable.fbRollPlus.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbLineRegulator.fbTurntable.fbRollMinus.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbLineRegulator.aRollerConveyors[1].fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbLineRegulator.aRollerConveyors[2].fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbLineRegulator.aRollerConveyors[3].fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbLineRegulator.fbRollerConveyorExit.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.aTransferLines[1].aRollerConveyors[1].fbStart.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -220,10 +256,6 @@
 						</Var>
 						<Var>
 							<Name>MAIN.aTransferLines[1].aRollerConveyors[3].fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[1].fbPalletizer.fbDoneCycle.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -279,6 +311,10 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.aTransferLines[1].fbPalletizer.fbDoneCycle.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.aTransferLines[1].scBeltConveyors.fbReleaseResult.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -320,10 +356,6 @@
 						</Var>
 						<Var>
 							<Name>MAIN.aTransferLines[2].aRollerConveyors[3].fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[2].fbPalletizer.fbDoneCycle.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -379,6 +411,10 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.aTransferLines[2].fbPalletizer.fbDoneCycle.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.aTransferLines[2].scBeltConveyors.fbReleaseResult.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
@@ -420,10 +456,6 @@
 						</Var>
 						<Var>
 							<Name>MAIN.aTransferLines[3].aRollerConveyors[3].fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.aTransferLines[3].fbPalletizer.fbDoneCycle.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -476,6 +508,10 @@
 						</Var>
 						<Var>
 							<Name>MAIN.aTransferLines[3].fbPalletizer.scSecondFloor.fbClampCyl.fbExtend.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.aTransferLines[3].fbPalletizer.fbDoneCycle.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>

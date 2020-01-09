@@ -542,6 +542,10 @@
 							<Name>MAIN.fbLineRegulator.aRollerConveyors[3].fbStart.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
+						<Var>
+							<Name>MAIN.fbLineRegulator.fbRollerConveyorExit.fbStart.bValue</Name>
+							<Type>BOOL</Type>
+						</Var>
 					</Vars>
 					<TaskPouOids>
 						<TaskPouOid Prio="20" OTCID="#x08502001"/>

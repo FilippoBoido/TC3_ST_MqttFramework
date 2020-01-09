@@ -10,10 +10,14 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[aTransferLines[1](sTLMqttName := 'TL1_Synch');
-aTransferLines[2](sTLMqttName := 'TL2_Synch');
-aTransferLines[3](sTLMqttName := 'TL3_Synch');
-fbLineRegulator();
+      <ST><![CDATA[aTransferLines[1](sTLMqttName := 'TL1Synch');
+aTransferLines[2](sTLMqttName := 'TL2Synch');
+aTransferLines[3](sTLMqttName := 'TL3Synch');
+fbLineRegulator(
+	 sSubscription1 := aTransferLines[1].sTLMqttName,
+	 sSubscription2 := aTransferLines[2].sTLMqttName,
+	 sSubscription3 := aTransferLines[3].sTLMqttName
+);
 
 CASE fbMainStepWorker.uiStep OF
 	
@@ -42,6 +46,9 @@ END_CASE]]></ST>
       <LineId Id="10" Count="0" />
       <LineId Id="12" Count="1" />
       <LineId Id="15" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="57" Count="1" />
+      <LineId Id="53" Count="0" />
       <LineId Id="45" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="18" Count="0" />

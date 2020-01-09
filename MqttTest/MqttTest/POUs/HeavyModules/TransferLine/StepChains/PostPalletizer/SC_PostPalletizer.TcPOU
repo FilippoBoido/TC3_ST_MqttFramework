@@ -5,7 +5,7 @@
 VAR_INPUT
 	bExecute : BOOL;
 	bPalletizerDeliveryRequest : BOOL;
-	sTLMqttName : STRING;
+	sTLMqttName : STRING(8);
 END_VAR
 VAR_OUTPUT
 	bGrantDeliveryPermission : BOOL;

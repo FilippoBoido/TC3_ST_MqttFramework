@@ -3,6 +3,9 @@
   <POU Name="SM_LineRegulator" Id="{ca3d4937-9986-4e8e-b7ee-5deb908a267b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK SM_LineRegulator EXTENDS StateMachine
 VAR_INPUT
+	 sSubscription1 : STRING(8);
+	 sSubscription2 : STRING(8);
+	 sSubscription3 : STRING(8);
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -10,13 +13,14 @@ VAR
 	fbTurntable : Turntable;
 
 	aRollerConveyors : ARRAY[1..3] OF RollerConveyor;
+	fbRollerConveyorExit : RollerConveyor;
 	fbReadyStepWorker : FB_StepWorker;
 	fbBusyStepWorker : FB_StepWorker;
 	fbInitStepWorker : FB_StepWorker;
 	
 	messageIndex : UINT;
 	stMqttPayload : ST_MqttPayload;
-	aSubscriptions : ARRAY[1..3] OF STRING;
+	aSubscriptions : ARRAY[1..3] OF STRING(8);
 	uiSubscriptionsCycler : UINT := 1;
 END_VAR
 ]]></Declaration>
@@ -37,6 +41,7 @@ END_VAR
 CASE fbBusyStepWorker.uiStep OF
 
 	0:
+	
 		aRollerConveyors[uiSubscriptionsCycler].On();
 		CASE uiSubscriptionsCycler OF
 		
@@ -56,6 +61,7 @@ CASE fbBusyStepWorker.uiStep OF
 			.mAddCondition(itfStepCondition := fbTurntable.fbBackLimit.getSignal)
 			.mAddCondition(itfStepCondition := fbTurntable.fbFrontLimit.getSignal)
 			.mNextStep(10);
+			
 	10:
 	
 		aRollerConveyors[uiSubscriptionsCycler].Off();
@@ -80,7 +86,9 @@ CASE fbBusyStepWorker.uiStep OF
 		END_CASE
 		
 	20:
+	
 		fbTurntable.RollPlus();
+		fbRollerConveyorExit.On();
 		fbBusyStepWorker
 			.mSetTimer(T#2S)
 			.mNextStep(30);
@@ -89,8 +97,9 @@ CASE fbBusyStepWorker.uiStep OF
 		IF NOT fbTurntable.fbBackLimit.bSignal
 			AND NOT fbTurntable.fbFrontLimit.bSignal
 		THEN
+			fbRollerConveyorExit.Off();
 			fbBusyStepWorker
-				.mSetTimer(T#2S)
+				.mSetTimer(T#1S)
 				.mNextStep(40);
 		END_IF
 		
@@ -140,22 +149,25 @@ CASE fbInitStepWorker.uiStep OF
 		
 	10:
 	
-		IF ADS.fbMqttClient.Subscribe('TL1_Synch')
+		IF ADS.fbMqttClient.Subscribe(sSubscription1)
 		THEN			
 			fbInitStepWorker.mNextStep(20);
 		END_IF
 		
 	20:
 	
-		IF ADS.fbMqttClient.Subscribe('TL2_Synch')
+		IF ADS.fbMqttClient.Subscribe(sSubscription2)
 		THEN			
 			fbInitStepWorker.mNextStep(30);
 		END_IF
 		
 	30:
 		
-		IF ADS.fbMqttClient.Subscribe('TL3_Synch')
-		THEN			
+		IF ADS.fbMqttClient.Subscribe(sSubscription3)
+		THEN		
+			aSubscriptions[1] := sSubscription1;
+			aSubscriptions[2] := sSubscription2;
+			aSubscriptions[3] := sSubscription3;
 			Start();
 		END_IF		
 		
@@ -236,6 +248,7 @@ END_VAR
       <LineId Id="39" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="44" Count="0" />
+      <LineId Id="123" Count="0" />
       <LineId Id="46" Count="0" />
       <LineId Id="57" Count="2" />
       <LineId Id="66" Count="1" />
@@ -251,6 +264,7 @@ END_VAR
       <LineId Id="48" Count="0" />
       <LineId Id="50" Count="1" />
       <LineId Id="49" Count="0" />
+      <LineId Id="121" Count="0" />
       <LineId Id="52" Count="0" />
       <LineId Id="97" Count="0" />
       <LineId Id="83" Count="0" />
@@ -265,12 +279,15 @@ END_VAR
       <LineId Id="70" Count="0" />
       <LineId Id="96" Count="0" />
       <LineId Id="53" Count="0" />
+      <LineId Id="122" Count="0" />
       <LineId Id="95" Count="0" />
+      <LineId Id="119" Count="0" />
       <LineId Id="99" Count="1" />
       <LineId Id="98" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="101" Count="1" />
       <LineId Id="104" Count="1" />
+      <LineId Id="120" Count="0" />
       <LineId Id="108" Count="1" />
       <LineId Id="107" Count="0" />
       <LineId Id="106" Count="0" />
@@ -294,7 +311,9 @@ END_VAR
       <LineId Id="48" Count="0" />
       <LineId Id="15" Count="3" />
       <LineId Id="49" Count="0" />
-      <LineId Id="19" Count="19" />
+      <LineId Id="19" Count="17" />
+      <LineId Id="53" Count="2" />
+      <LineId Id="37" Count="1" />
       <LineId Id="44" Count="0" />
       <LineId Id="9" Count="1" />
       <LineId Id="5" Count="0" />

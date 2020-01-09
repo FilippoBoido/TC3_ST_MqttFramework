@@ -3,7 +3,7 @@
   <POU Name="SM_TransferLine" Id="{2e7b366f-b9ef-4b13-bd70-7031bb32b800}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK SM_TransferLine EXTENDS StateMachine
 VAR_INPUT CONSTANT
-	sTLMqttName : STRING;
+	sTLMqttName : STRING(8);
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -50,7 +50,7 @@ scBeltConveyors(bAllPartsPresent := fbPalletizer.bAllPartsPresent);
 scPrePalletizer();
 scPrePalletizer.bPalletizerRequest := fbPalletizer.scFirstFloor.bPalletizerRequest;
 fbPalletizer.scFirstFloor.bIncomingPallet := scPrePalletizer.bSentToPalletizer;
-scPostPalletizer();
+scPostPalletizer(sTLMqttName := sTLMqttName);
 
 ]]></ST>
     </Implementation>
