@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.4">
-	<Project ProjectGUID="{2C7C6C1E-64B2-4999-A8B6-8AAAA925E43B}" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{2C7C6C1E-64B2-4999-A8B6-8AAAA925E43B}" TargetNetId="192.168.2.115.1.1" ShowHideConfigurations="#x106">
 		<System>
+			<Settings MaxCpus="2" NonWinCpus="1">
+				<Cpu CpuId="1"/>
+			</Settings>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
@@ -9,9 +12,9 @@
 			</Tasks>
 		</System>
 		<Plc>
-			<Project GUID="{181DAA07-DFB2-43EE-A732-FF6E42CFBF22}" Name="MqttTest" PrjFilePath="MqttTest\MqttTest.plcproj" TmcFilePath="MqttTest\MqttTest.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="MqttTest\MqttTest.tmc">
-					<Name>MqttTest Instance</Name>
+			<Project GUID="{181DAA07-DFB2-43EE-A732-FF6E42CFBF22}" Name="MqttTestPLC1" PrjFilePath="MqttTestPLC1\MqttTestPLC1.plcproj" TmcFilePath="MqttTestPLC1\MqttTestPLC1.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="MqttTestPLC1\MqttTestPLC1.tmc">
+					<Name>MqttTestPLC1 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
@@ -205,14 +208,6 @@
 						</Var>
 						<Var>
 							<Name>MAIN.aTransferLines[3].scPrePalletizer.fbPalletAvailable.fbSignal.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbLineRegulator.fbTurntable.fbFrontLimit.fbSignal.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbLineRegulator.fbTurntable.fbBackLimit.fbSignal.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
@@ -516,34 +511,6 @@
 						</Var>
 						<Var>
 							<Name>MAIN.aTransferLines[3].scPrePalletizer.fbRollConvPrePallet.fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbLineRegulator.fbTurntable.fbTurn.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbLineRegulator.fbTurntable.fbRollPlus.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbLineRegulator.fbTurntable.fbRollMinus.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbLineRegulator.aRollerConveyors[1].fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbLineRegulator.aRollerConveyors[2].fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbLineRegulator.aRollerConveyors[3].fbStart.bValue</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbLineRegulator.fbRollerConveyorExit.fbStart.bValue</Name>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>

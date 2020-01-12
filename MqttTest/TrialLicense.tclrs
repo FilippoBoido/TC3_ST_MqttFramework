@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <TcLicenseInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2011/11/TcLicenseInfo">
 	<LicenseInfo>
-		<SystemId>{9EA273EB-52C0-4E23-4DF2-6B6A0DBF0041}</SystemId>
-		<IssueTime>2020-01-02T13:00:00</IssueTime>
-		<ExpireTime>2020-01-10T00:00:00</ExpireTime>
-		<LicenseKey>822f4eb4626ca04d881c79992d42de9c7c5ee64a0bc95dec95854eab8383b3987373a4dbde3419b16b1de47e51580463fcf2ac8632c47ecb239632b9238f2a4fa905b6c51a38658ccb74e1f16a4003e06bfa4001dace10e015137ad52902106d12ca575f985551ed0cb6513a6f7a04e95bf90b87cea53919d472198a52e0a25c1d7eacb105d11a1950433de68e43bcc89da2190cdda8498e065c48310f9ab22defdeb9198b4887242a3cd2fae469df0faeef093d11325f009a219386b09a01e65c2c393581ae23d035fbb1facc49a8521c4a9f445ae58957b9fb5c9b48ed92d5005ce60f9ffc3e3a4a6829e9c262788368d1d315311dddb423ae56a22d119b5f</LicenseKey>
+		<SystemId>{A830029C-FFFC-237A-403A-A8A9E44E6F40}</SystemId>
+		<IssueTime>2020-01-11T19:01:00</IssueTime>
+		<ExpireTime>2020-01-19T00:00:00</ExpireTime>
+		<LicenseKey>7b25c7ec08ca413dfc37308b949f3cf6bb06c7da4da46654732a89bf49b65ceeaf03c720084455322a4b517f036bd51062bb6424a91502144c4a48837d79aaa38373c2cf6b7c7e016f162a8064df7d916c8a6f87d59f237caadb561f60c56b2c71c6164eb63cb99c34abb1d8b674593618c853ce31dd0f711e5522c694e7c871807560a32675db1129f521a6e126300f67e42fdac4f1c0c62ef2a60d7afca7123f04f19a6fe870ab235e3c5d526d16fcafddb5bef629bb6733e640a0102b99f1bc57d2273503299bc33e7344957c5e67d631d017d376e71bcde33a0617dcdfd12d2fd23857ad1d0fdf06d716240e8ad1b3fd9b1b322116522cb28d6527a25e3b</LicenseKey>
 		<License>
 			<LicenseId>{4C256767-E6E6-4AF5-BD68-9F7ABAD0C200}</LicenseId>
 			<Name>TC3 ADS</Name>
@@ -19,11 +19,6 @@
 			<LicenseId>{66689887-CCBD-452C-AC9A-039D997C6E66}</LicenseId>
 			<Name>TC3 PLC</Name>
 			<OrderNo>TC1200</OrderNo>
-		</License>
-		<License>
-			<LicenseId>{B27B051A-CA6A-42EA-833E-82CC92903D83}</LicenseId>
-			<Name>TC3 UML</Name>
-			<OrderNo>TF1910</OrderNo>
 		</License>
 	</LicenseInfo>
 </TcLicenseInfo>

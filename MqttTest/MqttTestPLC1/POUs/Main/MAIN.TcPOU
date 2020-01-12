@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="MAIN" Id="{c83d4c06-b08c-4f63-b878-b3a4e7399e2e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+ aTransferLines  : ARRAY[1..3] OF SM_TransferLine;
+ 
+ fbSymbolPathStorage : SymbolPathStorage;
+ fbMainStepWorker : FB_StepWorker;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[aTransferLines[1](sTLMqttName := 'TL1Synch');
+aTransferLines[2](sTLMqttName := 'TL2Synch');
+aTransferLines[3](sTLMqttName := 'TL3Synch');
+
+CASE fbMainStepWorker.uiStep OF
+	
+	eMainWaitStart:
+	
+		IF Visu.bStartTL1
+		THEN
+			aTransferLines[1].Execute();
+		END_IF
+		
+		IF Visu.bStartTL2
+		THEN
+			aTransferLines[2].Execute();
+		END_IF
+		
+		IF Visu.bStartTL3
+		THEN
+			aTransferLines[3].Execute();
+		END_IF
+		
+		
+	
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="98" Count="2" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="67" Count="20" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
