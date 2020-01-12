@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <DUT Name="PAL_Busy" Id="{5662a25d-f991-4301-b431-7227b3dab11e}">
+    <Declaration><![CDATA[
+TYPE PAL_Busy :
+(
+	ePALStart := 0
+	
+	
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

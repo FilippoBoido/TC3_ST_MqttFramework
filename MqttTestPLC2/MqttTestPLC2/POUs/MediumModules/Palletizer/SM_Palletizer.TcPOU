@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="SM_Palletizer" Id="{ce52986e-d795-4498-b449-1f0f8887e1e6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SM_Palletizer EXTENDS StateMachine
+VAR_INPUT
+	bExecute : BOOL;
+	scFirstFloor : SC_FirstFloor;	
+	scSecondFloor : SC_SecondFloor;
+END_VAR
+VAR_IN_OUT
+	ioChainController : FB_ChainController;
+END_VAR
+VAR_OUTPUT
+	
+	bAllPartsPresent: BOOL;	
+	
+END_VAR
+VAR
+
+	fbDoneCycle : BoolOut;
+	fbStepWorkerBusy : FB_StepWorker;
+	
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+scFirstFloor(bExecute := bExecute);
+scSecondFloor(bExecute := bExecute);
+
+bAllPartsPresent := scSecondFloor.bAllPartsPresent;
+scSecondFloor.bPlateOpen := scFirstFloor.bPlateOpen;]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{73f86d69-d2e5-4361-83bd-9fd09001ce81}">
+      <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[scFirstFloor(bExecute := TRUE);
+scSecondFloor(bExecute := TRUE);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{0aa84eeb-c74a-4552-ae6d-56f85f508303}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="getDoneCycle" Id="{da487bee-2a85-42f6-8ecb-c34e2f815fad}">
+      <Declaration><![CDATA[PROPERTY getDoneCycle : I_StepCondition]]></Declaration>
+      <Get Name="Get" Id="{b3b5795f-92ac-48f0-b2da-b92918c7358d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[getDoneCycle := fbDoneCycle;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Idle" Id="{e02fc5be-2003-4821-a34b-ebb230a9eb31}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{a7562592-ad57-424e-8965-d7b38793483f}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ioChainController
+	.addChain(itfChain := scFirstFloor)
+	.addChain(itfChain := scSecondFloor);
+	
+scFirstFloor(
+	sChainName := 'scFirstFloor',
+	rChainController := ioChainController
+);
+scSecondFloor(
+	sChainName := 'scSecondFloor',
+	rChainController := ioChainController
+);
+Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{5e41363b-2ef9-4a2e-a5fa-7da58e2da2bc}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{6aeac2e6-dd92-4451-b62a-3dd9ffa72f06}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{acd9be17-1066-42d2-ac59-aefa5bb57858}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SM_Palletizer">
+      <LineId Id="9" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="26" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Busy">
+      <LineId Id="6" Count="0" />
+      <LineId Id="88" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.getDoneCycle.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Init">
+      <LineId Id="9" Count="3" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="21" Count="2" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Ready">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_Palletizer.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

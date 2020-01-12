@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <DUT Name="SC_BUSY_BeltConveyors" Id="{f7b35447-4779-4fef-abb4-10d89bd67d0f}">
+    <Declaration><![CDATA[
+TYPE SC_BUSY_BeltConveyors :
+(
+	eBusySCStart := 0,
+	eStartEntranceConveyor,
+	eStartUpwardsConveyor,
+	eExecutePalletizer,
+	eStopEntranceConveyor,
+	eWaitForPalletizer,
+	eSignalError
+)UINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

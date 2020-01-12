@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="SC_PrePalletizer" Id="{4d68b7a9-380f-4680-8c23-9b189695cad0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SC_PrePalletizer EXTENDS FB_Chain
+VAR_INPUT
+	bPalletizerRequest : BOOL;
+	bExecute : BOOL;
+END_VAR
+VAR_OUTPUT
+	bSentToPalletizer : BOOL;
+	bPalletAvailable : BOOL;
+END_VAR
+VAR
+	fbRollConvEntrance : RollerConveyor;
+	fbRollConvPrePallet : RollerConveyor;
+	fbPalletAvailable : Sensor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+fbPalletAvailable();
+bPalletAvailable := fbPalletAvailable.bSignal;
+]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{d820917f-4e25-46f9-9d52-32a81aa4f13f}">
+      <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbStepWorkerBusy();
+CASE fbStepWorkerBusy.uiStep OF
+	
+	0: 
+		fbRollConvEntrance.On();
+		fbRollConvPrePallet.On();
+		IF NOT bPalletAvailable
+		THEN
+			bSentToPalletizer := TRUE;
+			fbStepWorkerBusy.mNextStep(10);
+		END_IF
+
+	10:
+		IF NOT bPalletizerRequest
+		THEN
+		
+			bSentToPalletizer := FALSE;
+			fbRollConvPrePallet.Off();
+			fbStepWorkerBusy.mNextStep(0);
+			
+			Done();
+			
+		ELSIF bPalletAvailable
+		THEN
+			fbRollConvEntrance.Off();
+		END_IF
+		
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{46485dc9-f0d7-4867-b360-d540fed53e71}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{6c9d5d66-bd5f-4610-99f9-63f453dbc70c}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{09f332ae-57ff-4d70-8e40-ebbc7ec6148e}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{fb8b9c49-3513-4272-b7c4-bbd7656237ef}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{f44ab75c-fea3-477e-acab-1329dc0b9d52}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+fbStepWorkerReady();
+CASE fbStepWorkerReady.uiStep OF
+	
+	0:
+		IF bExecute
+		THEN
+			fbStepWorkerReady.mNextStep(5);
+		END_IF
+		
+	5: 
+		IF NOT bPalletAvailable
+		THEN
+			fbRollConvEntrance.On();
+		ELSIF bPalletAvailable
+		THEN
+			fbRollConvEntrance.Off();
+			fbStepWorkerReady.mNextStep(10);
+		END_IF
+		
+	10:
+		IF bPalletizerRequest
+		THEN
+			fbStepWorkerReady.mNextStep(0);
+			Execute();
+		END_IF
+		
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{77554b89-ed18-4d33-9356-fca189e07525}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SC_PrePalletizer">
+      <LineId Id="9" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Busy">
+      <LineId Id="43" Count="0" />
+      <LineId Id="45" Count="2" />
+      <LineId Id="64" Count="1" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="56" Count="3" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="62" Count="1" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Ready">
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="55" Count="2" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="38" Count="2" />
+      <LineId Id="42" Count="3" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="49" Count="2" />
+      <LineId Id="53" Count="1" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="36" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PrePalletizer.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

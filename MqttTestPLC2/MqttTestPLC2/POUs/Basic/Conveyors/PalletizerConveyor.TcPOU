@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="PalletizerConveyor" Id="{2ce7a42e-b441-4b88-9e0a-c833ce71c0d4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PalletizerConveyor EXTENDS Conveyor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bStartBackward : BOOL;
+END_VAR
+VAR	
+	fbStartBackward : BoolOut;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+bStartBackward := fbStartBackward.getValue;]]></ST>
+    </Implementation>
+    <Property Name="getStartBackward" Id="{1be61ee4-2b11-41d3-b441-0dd528ef6733}">
+      <Declaration><![CDATA[PROPERTY getStartBackward : I_StepCondition]]></Declaration>
+      <Get Name="Get" Id="{08cd3fdd-45df-4c96-8883-2d6eba7e8d6b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[getStartBackward := fbStartBackward;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="PalletizerConveyor">
+      <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="0" />
+    </LineIds>
+    <LineIds Name="PalletizerConveyor.getStartBackward.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

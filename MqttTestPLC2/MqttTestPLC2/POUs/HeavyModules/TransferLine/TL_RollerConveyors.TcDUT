@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <DUT Name="TL_RollerConveyors" Id="{4662adaa-c006-41c3-8e69-1c3f65d21fc9}">
+    <Declaration><![CDATA[
+TYPE TL_RollerConveyors :
+(
+	eRollerConveyorEntrance := 1,
+	eRollerConveyorExit,
+	eRollerConveyorPrePalletizer,
+	eTlMaxNumRollerConveyors
+)UINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <DUT Name="SC_ACTUATOR_BeltConveyors" Id="{82306e5f-96df-4f37-af9c-4010ba60f2fc}">
+    <Declaration><![CDATA[
+TYPE SC_ACTUATOR_BeltConveyors :
+(
+	eBeltConveyorEntrance := 1,
+	eBeltConveyorUpwards,
+	eMaxNumBeltConveyors
+)UINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

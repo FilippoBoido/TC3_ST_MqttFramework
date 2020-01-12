@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="SM_TransferLine" Id="{6f843e77-bb22-480b-8b14-188352f305ee}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SM_TransferLine EXTENDS StateMachine
+VAR_INPUT CONSTANT
+	sTLMqttName : STRING(8);
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	
+	aRollerConveyors : ARRAY[1..3] OF RollerConveyor;
+	fbChainController : FB_ChainController;
+	
+	fbPalletizer : SM_Palletizer;
+	fbStepWorkerReady : FB_StepWorker;
+	fbStepWorkerBusy : FB_StepWorker;
+
+	scBeltConveyors : 
+		SC_BeltConveyors := 
+		(
+			sChainName  := 'scBeltConveyors',
+			rChainController := fbChainController
+		);
+		
+	scPostPalletizer : 
+		SC_PostPalletizer := 
+		(
+			sChainName  := 'scPostPalletizer',
+			rChainController := fbChainController
+		);
+		
+	scPrePalletizer : 
+		SC_PrePalletizer := 
+		(
+			sChainName  := 'scPrePalletizer',
+			rChainController := fbChainController
+		);
+ 
+	uiPackageCounter : UINT;
+	i : UINT;
+	bPackageOnTheWay : BOOL;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+fbPalletizer(ioChainController := fbChainController);
+scBeltConveyors(bAllPartsPresent := fbPalletizer.bAllPartsPresent);
+scPrePalletizer();
+scPrePalletizer.bPalletizerRequest := fbPalletizer.scFirstFloor.bPalletizerRequest;
+fbPalletizer.scFirstFloor.bIncomingPallet := scPrePalletizer.bSentToPalletizer;
+scPostPalletizer(sTLMqttName := sTLMqttName);
+
+]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{ba0ee649-e6ac-40a4-ac17-f140d3419283}">
+      <Declaration><![CDATA[METHOD PROTECTED Busy : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE fbStepWorkerBusy.uiStep OF
+	eTlStartUnits:
+		scBeltConveyors.bExecute := TRUE;
+		scPrePalletizer.bExecute := TRUE;
+		scPostPalletizer.bExecute := TRUE;
+		fbPalletizer.bExecute := TRUE;
+		fbStepWorkerBusy.mNextStep(eTlCheckUnits);
+	eTlCheckUnits:
+		IF scBeltConveyors.eStateMachine = E_StateMachine.eError
+		THEN
+			fbStepWorkerBusy.mNextStep(eTlSignalError);
+		END_IF
+	eTlSignalError:
+		Fault();
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{25dafad4-832a-4b58-a247-fab5222968c3}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{f1f51908-c198-4971-a94a-ecbcd2e14002}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{b268c93a-f267-4f9d-9c0b-502444e4de54}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbChainController
+	.addChain(itfChain := scBeltConveyors)
+	.addChain(itfChain := scPostPalletizer)
+	.addChain(itfChain := scPrePalletizer);
+	
+	
+Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{c71298a5-214a-4fbd-bc50-6a1ff0be19ce}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{b730c8ee-8bb5-459b-84c3-d41d010e0e7c}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{a1e703a8-39c7-4d9d-a5f5-59ed24c6ef8d}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SM_TransferLine">
+      <LineId Id="37" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="215" Count="1" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="31" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_TransferLine.Busy">
+      <LineId Id="38" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="85" Count="1" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="74" Count="3" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="80" Count="1" />
+      <LineId Id="68" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_TransferLine.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_TransferLine.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_TransferLine.Init">
+      <LineId Id="9" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_TransferLine.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_TransferLine.Ready">
+      <LineId Id="23" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_TransferLine.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

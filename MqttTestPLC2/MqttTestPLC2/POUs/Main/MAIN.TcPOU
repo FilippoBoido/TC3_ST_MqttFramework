@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="MAIN" Id="{4a3c7469-a95d-43da-b36d-b6415d027575}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+ 
+ fbLineRegulator : SM_LineRegulator;
+ fbSymbolPathStorage : SymbolPathStorage;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbLineRegulator(
+	 sSubscription1 := 'TL1Synch',
+	 sSubscription2 := 'TL2Synch',
+	 sSubscription3 := 'TL3Synch'
+);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="66" Count="3" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

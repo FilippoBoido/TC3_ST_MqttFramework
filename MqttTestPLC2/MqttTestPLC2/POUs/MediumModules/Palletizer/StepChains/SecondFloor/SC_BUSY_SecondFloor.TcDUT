@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <DUT Name="SC_BUSY_SecondFloor" Id="{93a826e5-eed2-48d1-8f66-bbb8572ee08c}">
+    <Declaration><![CDATA[
+TYPE SC_BUSY_SecondFloor :
+(
+	eSecondFloorStart := 0,
+	eActivateTurn,
+	eActivateBeltForw,
+	eWaitForPackages,
+	ePushPackages,
+	eRetractPusher,
+	eClamp,
+	eRetractClamper,
+	eWaitForPallet,
+	eOpenPlate,
+	eClosePlate,
+	eElevatorUp,
+	eElevatorDown,
+	eStartChains,
+	eStopChains,
+	eWaitForFirstFloor,
+	eSyncWithFirstFloor,
+	eSecondFloorDone
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

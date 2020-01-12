@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <DUT Name="SC_SENSOR_BeltConveyors" Id="{9b6b561d-f00f-48b3-872c-2f3bd12b6eb7}">
+    <Declaration><![CDATA[
+TYPE SC_SENSOR_BeltConveyors :
+(
+	eCounterSensor := 1,
+	eBeltConveyorsMaxSensors
+)UINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

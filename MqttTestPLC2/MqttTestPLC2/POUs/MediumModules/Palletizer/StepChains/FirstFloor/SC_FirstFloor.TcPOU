@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="SC_FirstFloor" Id="{b387d0a3-03f1-4926-83a4-5dd8702fdbd2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SC_FirstFloor EXTENDS FB_Chain
+VAR_INPUT
+	bExecute : BOOL;
+	bIncomingPallet : BOOL;
+	bPostPalletizerRequestGranted : BOOL;
+END_VAR
+VAR_OUTPUT
+	bPlateOpen : BOOL;
+	bPalletizerRequest : BOOL;
+	bSentToPostPalletizer : BOOL;
+	bPostPalletizerDeliveryRequest : BOOL;
+END_VAR
+VAR
+	fbPallChainConveyor : PalletizerConveyor;
+	fbPallElevator : PalletizerElevator;
+	fbPlateCyl : Cylinder;
+	fbPlateLimitSen : Sensor;
+	fbElevatorFrontLimit : Sensor;
+	fbElevatorBackLimit : Sensor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+bPlateOpen := fbPlateCyl.bExtended;
+fbPallChainConveyor();
+fbPallElevator();
+fbPlateCyl();
+fbPlateLimitSen();]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{684ccb79-3580-4ba4-bd92-b9e29aca8ff2}">
+      <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+		
+fbStepWorkerBusy();
+CASE fbStepWorkerBusy.uiStep OF
+	
+	0: 
+		fbPallChainConveyor.On();
+		fbStepWorkerBusy
+			.mAddCondition(itfStepCondition := fbElevatorBackLimit.getSignal)
+			.mAddCondition(itfStepCOndition := fbElevatorFrontLimit.getSignal)
+			.mNextStep(10);
+			
+	10: 
+	
+		fbPallChainConveyor.Off();
+		bPalletizerRequest := FALSE;
+		IF rChainController
+			.releaseCheck(THIS^)
+			.releaseFromChain(sChainReleasing := 'scSecondFloor', THIS^)
+			.releaseResult(THIS^) 
+		THEN
+			fbStepWorkerBusy.mNextStep(20);
+		END_IF
+
+	20:
+	
+		fbPallElevator.MoveUp();
+		fbStepWorkerBusy
+			.mSetTimer(T#1S)
+			.mNextStep(30);
+			
+	30:
+	
+		IF NOT fbPallElevator.isMoving
+		THEN
+			fbStepWorkerBusy
+				.mSetTimer(tTime := T#2S)
+				.mNextStep(40);
+		END_IF
+		
+	40:
+	
+		fbPlateCyl.Extend();
+		fbStepWorkerBusy
+			.mSetTimer(T#2S)
+			.mNextStep(45);
+	
+	45:	
+		rChainController.releaseForChain('scSecondFloor', THIS^);	
+		fbPallElevator.MoveDown();		
+		fbStepWorkerBusy
+			.mSetTimer(T#2S)
+			.mNextStep(50);
+	50:
+	
+		IF NOT fbPallElevator.isMoving
+		THEN
+			rChainController.releaseForChain('scPostPalletizer', THIS^);
+			fbStepWorkerBusy.mNextStep(60);
+		END_IF
+	
+		
+	60:
+	
+		fbPlateCyl.Retract();
+		fbStepWorkerBusy.mNextStep(100);
+	
+	100:
+	
+		IF rChainController
+			.releaseCheck(THIS^)
+			.releaseFromChain(sChainReleasing := 'scPostPalletizer', THIS^)
+			.releaseResult(THIS^) 
+		THEN
+
+			fbPallChainConveyor.On();
+			fbStepWorkerBusy.mNextStep(105);
+			
+		END_IF
+
+	105:
+		fbStepWorkerBusy
+				.mSetTimer(T#2s)
+				.mNextStep(110);
+	110:		
+		
+		IF NOT fbElevatorBackLimit.bSignal
+			AND NOT fbElevatorFrontLimit.bSignal
+		THEN
+		
+			Done();
+			fbPallChainConveyor.Off();
+			fbStepWorkerBusy.mNextStep(0);
+		END_IF
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{6b3a7494-42ad-45fa-890c-59ddcc04207c}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{c2b72847-2699-4346-84d6-e060d5196804}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{fbb5c2ac-c375-4111-a666-11fa0d41d5db}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{f278bc3e-762c-4932-ae86-151e2c19ccba}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{05258b6b-2705-4ceb-9952-6379e5edf643}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+fbStepWorkerReady();
+CASE fbStepWorkerReady.uiStep OF
+	
+	0: 
+	
+		IF bExecute THEN
+			fbStepWorkerReady.mNextStep(10);
+		END_IF
+		
+	10:
+
+		IF NOT fbElevatorFrontLimit.bSignal
+			AND NOT fbElevatorBackLimit.bSignal 
+		THEN
+			bPalletizerRequest := TRUE;
+			fbStepWorkerReady.mNextStep(20);
+		END_IF
+		
+	20:
+	
+		IF bIncomingPallet
+		THEN
+			fbStepWorkerReady.mNextStep(0);
+			Execute();
+		END_IF
+		
+		
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{c7a157ad-d262-4247-b7ac-ac32cadf12cf}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SC_FirstFloor">
+      <LineId Id="9" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_FirstFloor.Busy">
+      <LineId Id="39" Count="0" />
+      <LineId Id="43" Count="4" />
+      <LineId Id="66" Count="9" />
+      <LineId Id="77" Count="5" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="84" Count="7" />
+      <LineId Id="93" Count="1" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="97" Count="2" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="179" Count="0" />
+      <LineId Id="181" Count="1" />
+      <LineId Id="180" Count="0" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="183" Count="1" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="110" Count="1" />
+      <LineId Id="189" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="140" Count="1" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="166" Count="3" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="197" Count="1" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="153" Count="1" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="157" Count="1" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_FirstFloor.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_FirstFloor.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_FirstFloor.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_FirstFloor.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_FirstFloor.Ready">
+      <LineId Id="58" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="59" Count="7" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="80" Count="2" />
+      <LineId Id="84" Count="1" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="77" Count="1" />
+      <LineId Id="67" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_FirstFloor.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

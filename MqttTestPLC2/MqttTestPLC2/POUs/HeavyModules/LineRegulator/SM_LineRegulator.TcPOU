@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="SM_LineRegulator" Id="{ad4b4131-efe4-4f92-890f-d8bb1cb3f800}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SM_LineRegulator EXTENDS StateMachine
+VAR_INPUT
+	 sSubscription1 : STRING(8);
+	 sSubscription2 : STRING(8);
+	 sSubscription3 : STRING(8);
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbTurntable : Turntable;
+
+	aRollerConveyors : ARRAY[1..3] OF RollerConveyor;
+	fbRollerConveyorExit : RollerConveyor;
+	fbReadyStepWorker : FB_StepWorker;
+	fbBusyStepWorker : FB_StepWorker;
+	fbInitStepWorker : FB_StepWorker;
+	
+	messageIndex : UINT;
+	stMqttPayload : ST_MqttPayload;
+	aSubscriptions : ARRAY[1..3] OF STRING(8);
+	uiSubscriptionsCycler : UINT := 1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+fbTurntable();
+aRollerConveyors[1]();
+aRollerConveyors[3]();
+]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{bacf8a3e-55e0-476f-ae74-184212c7d4f8}">
+      <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbBusyStepWorker();
+CASE fbBusyStepWorker.uiStep OF
+
+	0:
+	
+		aRollerConveyors[uiSubscriptionsCycler].On();
+		CASE uiSubscriptionsCycler OF
+		
+			1:
+				fbTurntable.RollMinus();
+				fbTurntable.Turn();
+			
+			2:
+				fbTurntable.RollPlus();
+			
+			3:
+				fbTurntable.RollPlus();
+				fbTurntable.Turn();
+		END_CASE
+		
+		fbBusyStepWorker
+			.mAddCondition(itfStepCondition := fbTurntable.fbBackLimit.getSignal)
+			.mNextStep(10);
+			
+	10:
+	
+		aRollerConveyors[uiSubscriptionsCycler].Off();
+		CASE uiSubscriptionsCycler OF
+		
+			1:
+				fbTurntable.StopRolling();			
+				fbTurntable.UnTurn();
+				fbBusyStepWorker
+					.mSetTimer(T#2S)
+					.mNextStep(20);
+			
+			2:
+				fbBusyStepWorker.mNextStep(30);
+			
+			3:
+				fbTurntable.StopRolling();
+				fbTurntable.UnTurn();
+				fbBusyStepWorker
+					.mSetTimer(T#2S)
+					.mNextStep(20);
+		END_CASE
+		
+	20:
+	
+		fbTurntable.RollPlus();
+		fbRollerConveyorExit.On();
+		fbBusyStepWorker
+			.mSetTimer(T#10S)
+			.mNextStep(30);
+	30:	
+	
+		IF NOT fbTurntable.fbBackLimit.bSignal
+			AND NOT fbTurntable.fbFrontLimit.bSignal
+		THEN
+			fbRollerConveyorExit.Off();
+			fbBusyStepWorker
+				.mSetTimer(T#1S)
+				.mNextStep(40);
+		END_IF
+		
+	40:
+	
+		fbBusyStepWorker.mNextStep(0);
+		Done();
+		
+	
+END_CASE
+		]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{96ce5d74-7a3f-42d7-b0d0-3590a804dfe2}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{38cba348-d9fd-409a-9b9e-4554d87a396f}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{f1a298c1-d662-4861-a48d-11d144d0f0c6}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbInitStepWorker();
+CASE fbInitStepWorker.uiStep OF
+
+	0: 
+	
+		IF ADS.fbAdsConnector.isConnected
+		THEN
+			fbInitStepWorker.mNextStep(10);
+		END_IF
+		
+	10:
+	
+		IF ADS.fbMqttClient.Subscribe(sSubscription1)
+		THEN			
+			fbInitStepWorker.mNextStep(20);
+		END_IF
+		
+	20:
+	
+		IF ADS.fbMqttClient.Subscribe(sSubscription2)
+		THEN			
+			fbInitStepWorker.mNextStep(30);
+		END_IF
+		
+	30:
+		
+		IF ADS.fbMqttClient.Subscribe(sSubscription3)
+		THEN		
+			aSubscriptions[1] := sSubscription1;
+			aSubscriptions[2] := sSubscription2;
+			aSubscriptions[3] := sSubscription3;
+			Start();
+		END_IF		
+		
+END_CASE
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{1f0fec7d-c33b-4175-960e-d20abfbb4fbd}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{b00cb338-3e9d-4791-9660-cd67b71e4703}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbReadyStepWorker();
+
+
+CASE fbReadyStepWorker.uiStep OF
+
+	0: 
+		IF NOT fbTurntable.bBackLimit
+			AND NOT fbTurntable.bFrontLimit
+		THEN
+			fbReadyStepWorker.mNextStep(10);
+		END_IF
+		
+	10:
+	
+		IF uiSubscriptionsCycler = 3
+		THEN
+			uiSubscriptionsCycler := 1;
+		ELSE
+			uiSubscriptionsCycler := uiSubscriptionsCycler + 1;
+		END_IF
+		
+		messageIndex := ADS.fbMqttClient.isNewMessage(aSubscriptions[uiSubscriptionsCycler]);
+		IF messageIndex > 0
+		THEN
+			stMqttPayload := Ads.fbMqttClient.getNewMessage(messageIndex);
+			fbReadyStepWorker.mNextStep(20);
+		END_IF
+		
+	20:	
+		Ads.fbMqttClient.Publish(aSubscriptions[uiSubscriptionsCycler],stMqttPayload);
+		fbReadyStepWorker.mNextStep(0);
+		Execute();
+		
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{f685a573-862a-4fe6-a9e9-e1ec45aadb97}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SM_LineRegulator">
+      <LineId Id="9" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="25" Count="1" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Busy">
+      <LineId Id="45" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="57" Count="2" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="71" Count="4" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="76" Count="4" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="92" Count="1" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="99" Count="1" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="104" Count="1" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="108" Count="1" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="112" Count="1" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Init">
+      <LineId Id="11" Count="3" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="15" Count="3" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="19" Count="17" />
+      <LineId Id="53" Count="2" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Ready">
+      <LineId Id="29" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="93" Count="3" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="116" Count="4" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="80" Count="4" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="98" Count="3" />
+      <LineId Id="28" Count="0" />
+    </LineIds>
+    <LineIds Name="SM_LineRegulator.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

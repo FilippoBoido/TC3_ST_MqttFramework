@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="PalletizerElevator" Id="{4eb779f8-64c2-45d2-8e33-ff6a6414ef2d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PalletizerElevator EXTENDS Elevator
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	isMoving : BOOL;
+END_VAR
+VAR
+	fbElevatorMoving : Sensor;
+	fbElevatorUp : BoolOut;
+	fbElevatorDown : BoolOut;
+	fbElevatorToLimit : BoolOut;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[isMoving := fbElevatorMoving.bSignal;]]></ST>
+    </Implementation>
+    <Property Name="getElevatorMoving" Id="{95323b9c-95fa-41bd-8503-cd70b97b05a2}">
+      <Declaration><![CDATA[PROPERTY getElevatorMoving : I_StepCondition]]></Declaration>
+      <Get Name="Get" Id="{0e5bfb5b-cdd0-42ca-8764-48c3dad921a1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[getElevatorMoving := fbElevatorMoving.getSignal;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="MoveDown" Id="{f1df31ac-a5cc-42f8-8414-2af4b7cb61b7}">
+      <Declaration><![CDATA[METHOD MoveDown : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbElevatorDown.setValue := TRUE;
+fbElevatorUp.setValue := FALSE;
+
+fbElevatorToLimit.setValue := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MoveUp" Id="{6365eaa9-072d-406d-bc17-1567ac647da2}">
+      <Declaration><![CDATA[METHOD MoveUp : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbElevatorUp.setValue := TRUE;
+fbElevatorDown.setValue := FALSE;
+
+fbElevatorToLimit.setValue := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="PalletizerElevator">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="PalletizerElevator.getElevatorMoving.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="PalletizerElevator.MoveDown">
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="PalletizerElevator.MoveUp">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

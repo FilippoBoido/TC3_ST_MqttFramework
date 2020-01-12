@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="Conveyor" Id="{e1227bcb-2673-40d9-b87d-ebff2f2762dc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Conveyor 
+VAR_INPUT
+END_VAR
+
+VAR_OUTPUT
+	bStart  : BOOL;
+END_VAR
+VAR
+	fbStart : BoolOut;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bStart := fbStart.getValue;]]></ST>
+    </Implementation>
+    <Property Name="getStart" Id="{4f7a1143-3cc3-4e3a-830c-c1cee2508c6f}">
+      <Declaration><![CDATA[PROPERTY getStart : I_StepCondition]]></Declaration>
+      <Get Name="Get" Id="{8d1c48dd-37d7-4fae-86fd-9449fb147fce}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[getStart := fbStart;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Off" Id="{ad914a28-e08e-4d14-9ea5-dbfbd01d37d4}">
+      <Declaration><![CDATA[METHOD Off : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbStart.setValue := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="On" Id="{ea37b98a-aa0e-4a0e-bc89-47a3ebe7a0e6}">
+      <Declaration><![CDATA[METHOD On : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbStart.setValue := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Conveyor">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Conveyor.getStart.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Conveyor.Off">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Conveyor.On">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="Cylinder" Id="{db89b387-a330-4ef1-99df-108de492603e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Cylinder 
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bExtended : BOOL;
+	bExtend : BOOL;
+END_VAR
+VAR
+	fbExtendedSignal : BoolIn;
+	fbExtend : BoolOut;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bExtended := fbExtendedSignal.getValue;
+bExtend := fbExtend.getValue;
+]]></ST>
+    </Implementation>
+    <Method Name="Extend" Id="{94bdcdf1-c7f4-49dd-b22c-ac7a00277afb}">
+      <Declaration><![CDATA[METHOD Extend : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbExtend.setValue := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="getExtend" Id="{2b86f911-1673-4bb0-9c31-46cc468eb761}">
+      <Declaration><![CDATA[PROPERTY getExtend : I_StepCondition]]></Declaration>
+      <Get Name="Get" Id="{43470125-c179-4fda-9a24-0ad3f32b4aba}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[getExtend := fbExtend;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Retract" Id="{4d7b229f-5286-46f1-923f-5cc3f4a39fec}">
+      <Declaration><![CDATA[METHOD Retract : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbExtend.setValue := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Cylinder">
+      <LineId Id="12" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Cylinder.Extend">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Cylinder.getExtend.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Cylinder.Retract">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

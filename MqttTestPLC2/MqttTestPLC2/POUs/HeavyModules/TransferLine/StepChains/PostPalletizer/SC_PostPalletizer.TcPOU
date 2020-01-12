@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="SC_PostPalletizer" Id="{85befc7a-2bdd-4f2e-96bb-ac167a701ce0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SC_PostPalletizer EXTENDS FB_Chain
+VAR_INPUT
+	bExecute : BOOL;
+	bPalletizerDeliveryRequest : BOOL;
+	sTLMqttName : STRING(8);
+END_VAR
+VAR_OUTPUT
+	bGrantDeliveryPermission : BOOL;
+END_VAR
+VAR
+	
+	fbPalletAvailable : Sensor;
+	fbRollConveyor : RollerConveyor;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+fbPalletAvailable();
+fbRollConveyor();]]></ST>
+    </Implementation>
+    <Method Name="Busy" Id="{2bd66645-72ae-4316-97cd-fa00de023996}">
+      <Declaration><![CDATA[METHOD PROTECTED   Busy : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	stMqttPayload : ST_MqttPayload;
+	messageIndex : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbStepWorkerBusy();
+CASE fbStepWorkerBusy.uiStep OF
+	
+	0: 
+		THIS^.fbRollConveyor.On();
+		rChainController.releaseForChain('scFirstFloor', THIS^);
+		fbStepWorkerBusy.mNextStep(10);
+		
+	10:
+		IF THIS^.fbPalletAvailable.bSignal
+		THEN
+			THIS^.fbRollConveyor.Off();
+			fbStepWorkerBusy.mNextStep(20);
+		END_IF
+	
+	20: 
+		
+		//Mqtt exchange
+		IF Ads.fbMqttClient.Publish(sTLMqttName,stMqttPayload)
+		THEN
+			fbStepWorkerBusy.mNextStep(30);
+		END_IF
+	
+	30:
+	
+		messageIndex := ADS.fbMqttClient.isNewMessage(sTLMqttName);
+		IF messageIndex > 0
+		THEN
+			stMqttPayload := Ads.fbMqttClient.getNewMessage(messageIndex);
+			fbStepWorkerBusy.mNextStep(40);
+		END_IF
+		
+	40:
+	
+		THIS^.fbRollConveyor.On();
+		fbStepWorkerBusy
+			.mSetTimer(T#2S)
+			.mNextStep(50);
+			
+	50:
+		
+		THIS^.fbRollConveyor.Off();
+		Done();
+		fbStepWorkerBusy.mNextStep(0);
+		
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{1cc12c3d-3d64-4bd9-b820-a691065cd20e}">
+      <Declaration><![CDATA[METHOD PROTECTED  Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{21e079be-ae67-4053-80ab-63c89c0c93d1}">
+      <Declaration><![CDATA[METHOD PROTECTED  Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{43dca436-b609-4d32-a22f-f3731cf758bf}">
+      <Declaration><![CDATA[METHOD PROTECTED  Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF ADS.fbMqttClient.Subscribe(sTopic := sTLMqttName)
+THEN			
+	Start();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{80d62777-b07d-4ce4-9d67-fe49f794d2f0}">
+      <Declaration><![CDATA[METHOD PROTECTED  Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{8a8fa7c7-11ba-4410-a809-27bdd057d24c}">
+      <Declaration><![CDATA[METHOD PROTECTED  Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+fbStepWorkerReady();
+CASE fbStepWorkerReady.uiStep OF
+	
+0:
+
+	IF bExecute
+		AND NOT fbPalletAvailable.bSignal
+	THEN
+		fbStepWorkerReady.mNextStep(10);
+	END_IF
+		
+10:
+	IF rChainController
+		.releaseCheck(THIS^)
+		.releaseFromChain(sChainReleasing := 'scFirstFloor', THIS^)
+		.releaseResult(THIS^) 
+	THEN
+		fbStepWorkerReady.mNextStep(0);
+		Execute();
+	END_IF
+	
+END_CASE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{a61fe33e-cd23-4d8a-8570-78b7878b4290}">
+      <Declaration><![CDATA[METHOD PROTECTED  Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SC_PostPalletizer">
+      <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="25" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Busy">
+      <LineId Id="43" Count="2" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="47" Count="6" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="56" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="71" Count="2" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="77" Count="4" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="85" Count="1" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="89" Count="2" />
+      <LineId Id="93" Count="1" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="46" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Init">
+      <LineId Id="10" Count="2" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Ready">
+      <LineId Id="27" Count="3" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="62" Count="3" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="48" Count="0" />
+    </LineIds>
+    <LineIds Name="SC_PostPalletizer.Waiting">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
