@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="Version" Id="{95618842-63da-482f-8530-b7fbf5f82af2}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM Version
 VAR
@@ -16,6 +16,9 @@ Version.txt replaced with Version PRG
 
 VersionLib removed.
 
+1.0.3.3:	Boido	090220
+
+Bugfix in MqttClient.getNewMessage();
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
@@ -25,6 +28,8 @@ VersionLib removed.
       <LineId Id="11" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="16" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="22" Count="1" />
       <LineId Id="18" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>

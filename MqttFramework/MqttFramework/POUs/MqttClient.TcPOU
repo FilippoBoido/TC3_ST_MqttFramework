@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="MqttClient" Id="{a9904573-1d06-4478-8539-d64d4604b034}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK MqttClient EXTENDS StateMachine
 VAR_INPUT
@@ -64,13 +64,16 @@ END_VAR
 VAR_INPUT
 	index : UINT;
 END_VAR
-]]></Declaration>
+VAR
+	stEmptyMqttPayload : ST_MqttPayload;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF index > 0
 	AND index <= cMaxSubscriptions 
 THEN
 	aAdsSubscriptionStorage[index].bNewMessage := FALSE;
 	getNewMessage := aAdsSubscriptionStorage[index].stMqttPayload;
+	aAdsSubscriptionStorage[index].stMqttPayload := stEmptyMqttPayload;
 END_IF
 
 ]]></ST>
@@ -233,6 +236,7 @@ END_VAR
       <LineId Id="21" Count="0" />
       <LineId Id="30" Count="0" />
       <LineId Id="25" Count="0" />
+      <LineId Id="37" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="5" Count="0" />
