@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="AdsSupplier" Id="{0d50a734-f93b-4914-9a10-6f2a3be60896}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK AdsSupplier
 VAR_INPUT
@@ -22,6 +22,7 @@ IF fbLocalSystemTime.bValid
 THEN
 	stMqttLifePackage.uiStateMachine := MAIN.mainMachineCycle.eStateMachine;
 	stMqttLifePackage.dtDate := SYSTEMTIME_TO_DT( fbLocalSystemTime.systemTime );
+	stMqttLifePackage.sDateTime := DT_TO_STRING(stMqttLifePackage.dtDate);
 END_IF
 ]]></ST>
     </Implementation>
@@ -31,6 +32,7 @@ END_IF
       <LineId Id="29" Count="0" />
       <LineId Id="34" Count="0" />
       <LineId Id="31" Count="1" />
+      <LineId Id="48" Count="0" />
       <LineId Id="30" Count="0" />
       <LineId Id="13" Count="0" />
     </LineIds>

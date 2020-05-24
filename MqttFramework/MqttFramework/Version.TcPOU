@@ -19,6 +19,10 @@ VersionLib removed.
 1.0.3.3:	Boido	090220
 
 Bugfix in MqttClient.getNewMessage();
+
+1.0.4.4:	Boido	240520
+
+Date and time as String in ST_MqttLifePackage
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
@@ -31,6 +35,8 @@ Bugfix in MqttClient.getNewMessage();
       <LineId Id="24" Count="0" />
       <LineId Id="22" Count="1" />
       <LineId Id="18" Count="0" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="28" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
