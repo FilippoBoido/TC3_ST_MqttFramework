@@ -49,7 +49,7 @@ CASE fbStepWorkerBusy.uiStep OF
 	20: 
 		
 		//Mqtt exchange
-		IF Ads.fbMqttClient.Publish(sTLMqttName,stMqttPayload)
+		IF Ads.fbMqttClient.Publish(sTLMqttName,stMqttPayload,this)
 		THEN
 			fbStepWorkerBusy.mNextStep(30);
 		END_IF
@@ -103,7 +103,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF ADS.fbMqttClient.Subscribe(sTopic := sTLMqttName)
+        <ST><![CDATA[IF ADS.fbMqttClient.Subscribe(sTopic := sTLMqttName, this)
 THEN			
 	Start();
 END_IF]]></ST>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="MAIN" Id="{a86c6d0f-1010-44d2-ba7b-37cc6bac563a}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN 
 VAR
@@ -28,7 +28,7 @@ CASE fbStepWorker.getStep OF
 	
 		IF ADS.fbAdsConnector.isConnected
 		THEN
-			IF ADS.fbMqttClient.Subscribe('TEST')
+			IF ADS.fbMqttClient.Subscribe('TEST',ADR(MAIN))
 			THEN
 				
 				fbStepWorker.mNextStep(ePREP_PUBLISH);
@@ -44,7 +44,7 @@ CASE fbStepWorker.getStep OF
 		
 	ePUBLISH:
 		
-		IF ADS.fbMqttClient.Publish('TEST',stMqttPubPayload)
+		IF ADS.fbMqttClient.Publish('TEST',stMqttPubPayload,ADR(MAIN))
 		THEN
 			fbStepWorker.mNextStep(eCHECK_SUBSCRIPTION);
 		END_IF	

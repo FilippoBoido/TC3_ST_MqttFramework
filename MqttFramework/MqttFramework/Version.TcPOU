@@ -23,6 +23,14 @@ Bugfix in MqttClient.getNewMessage();
 1.0.4.4:	Boido	240520
 
 Date and time as String in ST_MqttLifePackage
+
+1.0.5.5:	Boido	300520
+
+isPublishing and isSubscribing methods added to MqttClient
+
+1.0.6.6:	Boido	300520
+
+pvLockSubscribe and pvLockPublish added to MqttClient
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
@@ -37,6 +45,12 @@ Date and time as String in ST_MqttLifePackage
       <LineId Id="18" Count="0" />
       <LineId Id="29" Count="2" />
       <LineId Id="28" Count="0" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="41" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
