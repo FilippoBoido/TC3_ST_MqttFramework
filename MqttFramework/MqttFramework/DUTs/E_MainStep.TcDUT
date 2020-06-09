@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <DUT Name="E_MainStep" Id="{db132ccf-282a-42c2-9dab-7b358aec39c3}">
     <Declaration><![CDATA[
 TYPE E_MainStep :
@@ -10,7 +10,7 @@ TYPE E_MainStep :
 	eCHECK_SUBSCRIPTION,
 	eEVAL_PAYLOAD,
 	ePREPARE_PACKAGE_TIMER 
-);
+)UINT;
 END_TYPE
 ]]></Declaration>
   </DUT>

@@ -31,6 +31,10 @@ isPublishing and isSubscribing methods added to MqttClient
 1.0.6.6:	Boido	300520
 
 pvLockSubscribe and pvLockPublish added to MqttClient
+
+1.0.7.7:	Boido	090620
+
+changed E_MainStep and E_AdsConnectorBusy enum-type to UINT
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
@@ -51,6 +55,8 @@ pvLockSubscribe and pvLockPublish added to MqttClient
       <LineId Id="39" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="41" Count="0" />
+      <LineId Id="47" Count="2" />
+      <LineId Id="46" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
