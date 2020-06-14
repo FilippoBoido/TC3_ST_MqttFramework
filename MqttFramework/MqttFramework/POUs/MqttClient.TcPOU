@@ -13,16 +13,24 @@ VAR
 	bPublished : BOOL;
 	bSubscribing : BOOL;
 	bSubscribed : BOOL;
-	
+	bPublishingMessage : BOOL;
+	bPublishedMessage : BOOL;
 	uiSubscriptionCounter : UINT := 1;
 	uiPublicationCounter : UINT := 1;
+	uiMessageCounter : UINT := 0;
 	
 	uiSizeOfSubscriptions : UINT;
 	uiSizeOfPublications : UINT;
 	
 	aAdsSubscriptionStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
-	aAdsPublicationStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
-	aAdsOldPublications : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
+	
+	aAdsPublicationStorage : ARRAY[1..cMaxPublications] OF ST_MqttAdsShell;
+	aAdsOldPublications : ARRAY[1..cMaxPublications] OF ST_MqttAdsShell;
+	
+	
+	aAdsMessageStorage : ARRAY[1..cMaxMessages] OF ST_MqttMessage;
+	aAdsOldMessages : ARRAY[1..cMaxMessages] OF ST_MqttMessage;
+	
 	sizeOfAdsShell : UINT;
 	
 	i : UINT;
@@ -33,6 +41,7 @@ END_VAR
 VAR CONSTANT
 	cMaxSubscriptions : UINT := 10;
 	cMaxPublications : UINT := 10;
+	cMaxMessages : UINT := 10;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -159,7 +168,8 @@ VAR_INPUT
 END_VAR
 
 VAR
-	aEmptyPublicationStorage : ARRAY[1..cMaxSubscriptions] OF ST_MqttAdsShell;
+	aEmptyPublicationStorage : ARRAY[1..cMaxPublications] OF ST_MqttAdsShell;
+	
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF  (	bPublishing
@@ -202,6 +212,60 @@ aAdsPublicationStorage[uiPublicationCounter].stMqttPayload := stMqttPayload;
 aAdsPublicationStorage[uiPublicationCounter].sTopic := sTopic;
 uiPublicationCounter := uiPublicationCounter + 1;
 
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="publishMessage" Id="{c52c1d47-e2fc-4270-849e-c1c5e503e648}">
+      <Declaration><![CDATA[METHOD publishMessage : BOOL
+VAR_INPUT
+	sTopic : STRING(8);
+	sMessage : T_MAXSTRING;
+	pvLock : PVOID;
+END_VAR
+
+VAR
+	aEmptyMessages : ARRAY[1..cMaxMessages] OF ST_MqttMessage;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  (	bPublishing
+		AND NOT bPublished)
+	OR 
+	(	bPublishingMessage 
+		AND bPublishedMessage
+		AND THIS^.pvLockPublish <> pvLock)		
+THEN
+
+	RETURN;
+	
+ELSIF 	bPublishingMessage 
+	AND bPublishedMessage
+	AND THIS^.pvLockPublish = pvLock
+THEN
+
+	bPublishingMessage := FALSE;
+	bPublishedMessage := FALSE;
+	publishMessage := TRUE;
+	RETURN;
+	
+ELSIF 	NOT bPublishingMessage
+	AND NOT bPublishedMessage
+THEN
+ 
+	THIS^.pvLockPublish := pvLock;
+	bPublishingMessage := TRUE;
+	
+END_IF
+
+IF uiMessageCounter > cMaxMessages
+THEN
+	aAdsOldMessages := aAdsMessageStorage;
+	aAdsMessageStorage := aEmptyMessages;	
+	uiMessageCounter := 0;
+END_IF
+
+aAdsMessageStorage[uiMessageCounter].sMessage := sMessage;
+aAdsMessageStorage[uiMessageCounter].sTopic := sTopic;
+uiMessageCounter := uiMessageCounter + 1;
 ]]></ST>
       </Implementation>
     </Method>
@@ -346,6 +410,10 @@ END_VAR
       <LineId Id="37" Count="1" />
       <LineId Id="36" Count="0" />
       <LineId Id="39" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="MqttClient.publishMessage">
+      <LineId Id="10" Count="38" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="MqttClient.Ready">

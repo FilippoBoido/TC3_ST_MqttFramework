@@ -35,6 +35,10 @@ pvLockSubscribe and pvLockPublish added to MqttClient
 1.0.7.7:	Boido	090620
 
 changed E_MainStep and E_AdsConnectorBusy enum-type to UINT
+
+1.1.0.8:	Boido	140620
+
+Ability to send strings with publishMessage added to the mqttClient
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
@@ -57,6 +61,8 @@ changed E_MainStep and E_AdsConnectorBusy enum-type to UINT
       <LineId Id="41" Count="0" />
       <LineId Id="47" Count="2" />
       <LineId Id="46" Count="0" />
+      <LineId Id="54" Count="2" />
+      <LineId Id="53" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

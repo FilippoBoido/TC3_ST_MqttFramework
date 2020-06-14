@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
+  <POU Name="ST_MqttMessage" Id="{89c0be22-c749-48c2-873e-ede4c6b89015}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'}
+TYPE ST_MqttMessage :
+STRUCT
+	sTopic : STRING;
+	sMessage : T_MAXSTRING;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="ST_MqttMessage">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
