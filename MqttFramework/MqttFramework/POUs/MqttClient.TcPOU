@@ -227,8 +227,8 @@ VAR
 	aEmptyMessages : ARRAY[1..cMaxMessages] OF ST_MqttMessage;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF  (	bPublishing
-		AND NOT bPublished)
+        <ST><![CDATA[IF  (	bPublishingMessage
+		AND NOT bPublishedMessage)
 	OR 
 	(	bPublishingMessage 
 		AND bPublishedMessage
@@ -263,9 +263,10 @@ THEN
 	uiMessageCounter := 0;
 END_IF
 
+uiMessageCounter := uiMessageCounter + 1;
 aAdsMessageStorage[uiMessageCounter].sMessage := sMessage;
 aAdsMessageStorage[uiMessageCounter].sTopic := sTopic;
-uiMessageCounter := uiMessageCounter + 1;
+
 ]]></ST>
       </Implementation>
     </Method>
@@ -413,7 +414,9 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="MqttClient.publishMessage">
-      <LineId Id="10" Count="38" />
+      <LineId Id="10" Count="34" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="45" Count="3" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="MqttClient.Ready">
