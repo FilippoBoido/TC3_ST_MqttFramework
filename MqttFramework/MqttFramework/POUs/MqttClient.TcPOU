@@ -182,9 +182,16 @@ THEN
 
 	RETURN;
 	
+ELSIF	NOT bPublishing
+		AND bPublished
+THEN
+
+	bPublished := FALSE;
+	RETURN;
+	
 ELSIF 	bPublishing 
-	AND bPublished
-	AND THIS^.pvLockPublish = pvLock
+		AND bPublished	
+		AND THIS^.pvLockPublish = pvLock
 THEN
 
 	bPublishing := FALSE;
@@ -237,9 +244,16 @@ THEN
 
 	RETURN;
 	
+ELSIF	NOT bPublishingMessage
+		AND bPublishedMessage
+THEN
+
+	bPublishedMessage := FALSE;
+	RETURN;	
+	
 ELSIF 	bPublishingMessage 
-	AND bPublishedMessage
-	AND THIS^.pvLockPublish = pvLock
+		AND bPublishedMessage	
+		AND THIS^.pvLockPublish = pvLock
 THEN
 
 	bPublishingMessage := FALSE;
@@ -256,7 +270,7 @@ THEN
 	
 END_IF
 
-IF uiMessageCounter > cMaxMessages
+IF uiMessageCounter >= cMaxMessages
 THEN
 	aAdsOldMessages := aAdsMessageStorage;
 	aAdsMessageStorage := aEmptyMessages;	
@@ -389,7 +403,12 @@ END_VAR
       <LineId Id="11" Count="0" />
       <LineId Id="86" Count="0" />
       <LineId Id="14" Count="0" />
-      <LineId Id="77" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="107" Count="1" />
+      <LineId Id="110" Count="1" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="112" Count="0" />
       <LineId Id="15" Count="1" />
       <LineId Id="65" Count="0" />
       <LineId Id="17" Count="0" />
@@ -414,7 +433,14 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="MqttClient.publishMessage">
-      <LineId Id="10" Count="34" />
+      <LineId Id="10" Count="8" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="75" Count="4" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="23" Count="21" />
       <LineId Id="58" Count="0" />
       <LineId Id="45" Count="3" />
       <LineId Id="5" Count="0" />
